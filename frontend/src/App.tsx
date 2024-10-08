@@ -1,29 +1,22 @@
-
-
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import HeroSection from './components/HeroSection'
-import FeatureSection from './components/FeatureSection'
-import { Workflow } from 'lucide-react'
-import Pricing from './components/Pricing'
-import Testimonials from './components/Testimonials'
-import Footer from './components/Footer'
-import Navbar from './components/Navbar'
-
+import HomePage from './components/HomePage/HomePage'
+import Signup from './components/SignUp/Signup'
+import Login from './components/Login/Login'
+import Verify2FA from './components/Verify2FA/Verify2FA'
+import Dashboard from './components/Dashboard/Dashboard'
 function App() {
 
 
   return (
     <>
-      
-      <Navbar />
-      <div className="max-w-7xl mx-auto pt-20 px-6">
-        <HeroSection />
-        <FeatureSection />
-        <Workflow />
-        <Pricing />
-        <Testimonials />
-        <Footer />
-      </div>
+      <Routes>
+        <Route path='/HomePage' element={<HomePage></HomePage>}></Route>
+        <Route path='/signup' element={<Signup></Signup>}></Route>
+        <Route path='/login' element={<Login></Login>}></Route>
+        <Route path="/verify-2fa" element={<Verify2FA />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </>
   )
 }

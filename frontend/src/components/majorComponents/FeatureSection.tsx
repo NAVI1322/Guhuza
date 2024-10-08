@@ -1,4 +1,6 @@
-import { features } from "../constants";
+import { features } from "@/constants";
+
+features
 
 const FeatureSection = () => {
   

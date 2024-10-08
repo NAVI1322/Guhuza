@@ -13,10 +13,10 @@ import user5 from "../assets/profile-pictures/user5.jpg";
 import user6 from "../assets/profile-pictures/user6.jpg";
 
 export const navItems = [
-  { label: "Features", href: "#" },
-  { label: "Workflow", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Testimonials", href: "#" },
+  { label: "How it Works", href: "#" },
+  { label: "Game Features", href: "#" },
+  { label: "Pricing Plans", href: "#" },
+  { label: "Community", href: "#" },
 ];
 
 export const testimonials = [
@@ -24,99 +24,99 @@ export const testimonials = [
     user: "John Doe",
     company: "Stellar Solutions",
     image: user1,
-    text: "I am extremely satisfied with the services provided. The team was responsive, professional, and delivered results beyond my expectations.",
+    text: "The Guhuza Job-Seeking Game has transformed how we view recruitment. The engaging elements make job-seeking less daunting and more interactive.",
   },
   {
     user: "Jane Smith",
     company: "Blue Horizon Technologies",
     image: user2,
-    text: "I couldn't be happier with the outcome of our project. The team's creativity and problem-solving skills were instrumental in bringing our vision to life",
+    text: "We love the competitive aspects! The game brings fun into the job search while still focusing on real skills and career progression.",
   },
   {
     user: "David Johnson",
     company: "Quantum Innovations",
     image: user3,
-    text: "Working with this company was a pleasure. Their attention to detail and commitment to excellence are commendable. I would highly recommend them to anyone looking for top-notch service.",
+    text: "Guhuza’s game is an innovative tool that connects job seekers and companies in a unique, interactive way. Highly recommend it!",
   },
   {
     user: "Ronee Brown",
     company: "Fusion Dynamics",
     image: user4,
-    text: "Working with the team at XYZ Company was a game-changer for our project. Their attention to detail and innovative solutions helped us achieve our goals faster than we thought possible. We are grateful for their expertise and professionalism!",
+    text: "The gamification of recruitment is a game-changer! The leaderboards and achievements motivate users to reach their career goals faster.",
   },
   {
     user: "Michael Wilson",
     company: "Visionary Creations",
     image: user5,
-    text: "I am amazed by the level of professionalism and dedication shown by the team. They were able to exceed our expectations and deliver outstanding results.",
+    text: "The strong network effects built into the game make Guhuza a powerful platform for expanding our hiring reach organically.",
   },
   {
     user: "Emily Davis",
     company: "Synergy Systems",
     image: user6,
-    text: "The team went above and beyond to ensure our project was a success. Their expertise and dedication are unmatched. I look forward to working with them again in the future.",
+    text: "Guhuza’s approach brings a fresh perspective to recruitment, making it an enjoyable and rewarding experience for everyone involved.",
   },
 ];
 
 export const features = [
   {
     icon: <BotMessageSquare />,
-    text: "Drag-and-Drop Interface",
+    text: "Interactive Job-Seeking Challenges",
     description:
-      "Easily design and arrange your VR environments with a user-friendly drag-and-drop interface.",
+      "Engage with resume-building tasks, interview simulations, and career quizzes to level up your job-seeking skills.",
   },
   {
     icon: <Fingerprint />,
-    text: "Multi-Platform Compatibility",
+    text: "Referral Bonuses & Rewards",
     description:
-      "Build VR applications that run seamlessly across multiple platforms, including mobile, desktop, and VR headsets.",
+      "Invite friends and earn referral bonuses, badges, and rewards for expanding the Guhuza network.",
   },
   {
     icon: <ShieldHalf />,
-    text: "Built-in Templates",
+    text: "Career Leaderboards",
     description:
-      "Jumpstart your VR projects with a variety of built-in templates for different types of applications and environments.",
+      "Compete with other users on leaderboards, achieve high scores, and showcase your career progression.",
   },
   {
     icon: <BatteryCharging />,
-    text: "Real-Time Preview",
+    text: "Daily Challenges & Streaks",
     description:
-      "Preview your VR application in real-time as you make changes, allowing for quick iterations and adjustments.",
+      "Keep your momentum going with daily challenges, streaks, and seasonal events to stay motivated.",
   },
   {
     icon: <PlugZap />,
-    text: "Collaboration Tools",
+    text: "Social Sharing Options",
     description:
-      "Work together with your team in real-time on VR projects, enabling seamless collaboration and idea sharing.",
+      "Share your achievements and progress with friends on social media to grow the Guhuza community.",
   },
   {
     icon: <GlobeLock />,
-    text: "Analytics Dashboard",
+    text: "Analytics & Insights",
     description:
-      "Gain valuable insights into user interactions and behavior within your VR applications with an integrated analytics dashboard.",
+      "Track your performance, see where you stand in the community, and use insights to improve your career strategies.",
   },
 ];
 
 export const checklistItems = [
   {
-    title: "Code merge made easy",
+    title: "Referral Bonuses for Network Expansion",
     description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+      "Increase your impact by referring friends and earning rewards for each successful connection.",
   },
   {
-    title: "Review code without worry",
+    title: "Showcase Skills Through Interactive Games",
     description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+      "Prove your worth by participating in skill-based challenges that demonstrate your qualifications to potential employers.",
   },
   {
-    title: "AI Assistance to reduce time",
+    title: "Compete and Collaborate with Peers",
     description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+      "Make the job search fun by competing on leaderboards and collaborating with peers for team achievements.",
   },
   {
-    title: "Share work in minutes",
+    title: "Track Your Career Growth",
     description:
-      "Track the performance of your VR apps and gain insights into user behavior.",
+      "Monitor your progress, complete challenges, and earn badges that highlight your career journey.",
   },
 ];
 
@@ -125,54 +125,54 @@ export const pricingOptions = [
     title: "Free",
     price: "$0",
     features: [
-      "Private board sharing",
-      "5 Gb Storage",
-      "Web Analytics",
-      "Private Mode",
+      "Access to Basic Challenges",
+      "Profile Customization",
+      "Community Access",
+      "Social Sharing",
     ],
   },
   {
     title: "Pro",
     price: "$10",
     features: [
-      "Private board sharing",
-      "10 Gb Storage",
-      "Web Analytics (Advance)",
-      "Private Mode",
+      "Access to Advanced Challenges",
+      "Personalized Career Coaching",
+      "Enhanced Analytics & Insights",
+      "Referral Bonuses",
     ],
   },
   {
     title: "Enterprise",
     price: "$200",
     features: [
-      "Private board sharing",
-      "Unlimited Storage",
-      "High Performance Network",
-      "Private Mode",
+      "Corporate Integration",
+      "Team Collaboration Tools",
+      "Custom Career Paths",
+      "Full Analytics Suite",
     ],
   },
 ];
 
 export const resourcesLinks = [
-  { href: "#", text: "Getting Started" },
-  { href: "#", text: "Documentation" },
-  { href: "#", text: "Tutorials" },
+  { href: "#", text: "Getting Started Guide" },
+  { href: "#", text: "Game Mechanics Documentation" },
+  { href: "#", text: "Tutorials & Tips" },
   { href: "#", text: "API Reference" },
-  { href: "#", text: "Community Forums" },
+  { href: "#", text: "Community Support" },
 ];
 
 export const platformLinks = [
-  { href: "#", text: "Features" },
-  { href: "#", text: "Supported Devices" },
+  { href: "#", text: "Game Features" },
+  { href: "#", text: "Supported Platforms" },
   { href: "#", text: "System Requirements" },
   { href: "#", text: "Downloads" },
-  { href: "#", text: "Release Notes" },
+  { href: "#", text: "Version History" },
 ];
 
 export const communityLinks = [
-  { href: "#", text: "Events" },
-  { href: "#", text: "Meetups" },
-  { href: "#", text: "Conferences" },
-  { href: "#", text: "Hackathons" },
-  { href: "#", text: "Jobs" },
+  { href: "#", text: "Community Events" },
+  { href: "#", text: "User Meetups" },
+  { href: "#", text: "Industry Conferences" },
+  { href: "#", text: "Hackathons & Challenges" },
+  { href: "#", text: "Job Opportunities" },
 ];

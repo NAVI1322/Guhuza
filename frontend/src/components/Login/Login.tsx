@@ -1,0 +1,67 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import { loginCall } from '@/hooks/LoginCall'; // Ensure this path is correct
+
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Handle form submission for login
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await loginCall(email, password);
+      setMessage(response.message);
+      setError(null);
+      // Redirect to the Verify2FA page after successful login and OTP initiation
+      navigate('/verify-2fa');
+    } catch (err) {
+      setMessage(null);
+      setError('Login failed. Please try again.');
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">Login</h2>
+        {message && <div className="text-green-600">{message}</div>}
+        {error && <div className="text-red-600">{error}</div>}
+        
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
+          >
+            Send OTP
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
