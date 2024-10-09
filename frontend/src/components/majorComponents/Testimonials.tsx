@@ -9,17 +9,17 @@ const Testimonials = () => {
       <div className="flex flex-wrap justify-center">
         {testimonials.map((testimonial, index) => (
           <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-4 py-2">
-            <div className="bg-neutral-900 dark:bg-gray-700 dark:text-white text-white rounded-md p-6 text-md border border-neutral-800 font-thin">
-              <p>{testimonial.text}</p>
-              <div className="flex mt-8 items-start">
+            <div className=" dark:bg-gradient-to-r dark:from-slate-900 dark:via-blue-800 dark:to-blue-500 bg-gradient-to-r from-blue-300 via-blue-600 to-blue-200 dark:text-white text-white rounded-md p-6 text-md border border-neutral-800 font-thin">
+              <p className="dark:text-slate-200 text-black font-light">{testimonial.text}</p>
+              <div className="flex mt-8 font-semibold items-start dark:text-neutral-600 text-black">
                 <img
                   className="w-12 h-12 mr-6 rounded-full border border-neutral-300"
                   src={testimonial.image}
                   alt=""
                 />
                 <div>
-                  <h6>{testimonial.user}</h6>
-                  <span className="text-sm font-normal italic text-neutral-600">
+                  <h6 className="text-black dark:text-white ">{testimonial.user}</h6>
+                  <span className="text-sm font-normal italic dark:text-white text-black">
                     {testimonial.company}
                   </span>
                 </div>

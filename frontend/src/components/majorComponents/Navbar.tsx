@@ -1,76 +1,104 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import logo from "../../assets/logo.png";
+import { useState,useEffect } from "react";
+import darklogo from "../../assets/darklogo.png";
+import lightlogo from "../../assets/lightlogo.png";
 import { navItems } from "@/constants";
 import { ModeToggle } from "../theme/modeToggle";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const router = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+  useEffect(() => {
+    // Detect dark mode based on a class or system preferences
+    setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }, []);
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
-const router = useNavigate()
+
   return (
     <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-700/80">
       <div className="container px-4 mx-auto relative lg:text-sm">
         <div className="flex justify-between items-center">
-          <div className="flex items-center flex-shrink-0">
-            <img className="h-10 w-10 mr-2" src={logo} alt="Logo" />
-            <span className="text-xl tracking-tight">VirtualR</span>
-          </div>
-          <ul className="hidden lg:flex ml-14 space-x-12">
+        <div className="flex items-center flex-shrink-0">
+      <img
+        className="h-6 w-20 mr-2"
+        src={isDarkMode ? darklogo : lightlogo}
+        alt="Logo"
+      />
+    </div>
+          {/* Desktop Navbar Links */}
+          <ul className="hidden lg:flex space-x-8">
             {navItems.map((item, index) => (
               <li key={index}>
-                <a href={item.href}>{item.label}</a>
+                <a href={item.href} className="hover:text-blue-500 transition duration-300">{item.label}</a>
               </li>
             ))}
           </ul>
-          <div className="hidden lg:flex justify-center space-x-12 items-center">
-            <button onClick={()=>{router('/login')}} className="py-2 px-3 border rounded-md">
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex justify-center space-x-8 items-center">
+            <button onClick={() => { router('/login') }} className="py-2 px-3 border rounded-md transition duration-300 hover:bg-neutral-700">
               Sign In
             </button>
-            <a><ModeToggle /></a>
-            <button onClick={()=>{router('/signup')}}
-             
-              className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
+            <ModeToggle />
+            <button onClick={() => { router('/signup') }}
+              className="bg-gradient-to-r from-blue-500 to-blue-800 py-2 px-3 rounded-md transition duration-300 hover:opacity-90"
             >
               Create an account
             </button>
           </div>
-          <div className="lg:hidden md:flex flex-col justify-end">
-            <button onClick={toggleNavbar}>
-              {mobileDrawerOpen ? <X /> : <Menu />}
-            </button>
-          </div>
+  {/* Mobile Menu Button */}
+<div className="lg:hidden md:flex flex-col justify-end">
+  <button onClick={toggleNavbar} className="p-2">
+    {mobileDrawerOpen ? (
+      <X className="text-neutral-900 dark:text-white" />  // X icon color change
+    ) : (
+      <Menu className="text-neutral-900 dark:text-white" />  // Menu icon color change
+    )}
+  </button>
+</div>
+
         </div>
-        {mobileDrawerOpen && (
-          <div className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden">
-            <ul>
-              {navItems.map((item, index) => (
-                <li key={index} className="py-4">
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-            </ul>
-            <div className="flex space-x-6">
-              <a href="#" className="py-2 px-3 border rounded-md">
-                Sign In
-              </a>
-              <a><ModeToggle /></a>
-              <a
-                href="#"
-                className="py-2 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800"
-              >
-                Create an account
-              </a>
-             
-            </div>
-          </div>
-        )}
+{/* Mobile Drawer */}
+{mobileDrawerOpen && (
+  <div className="fixed right-0 z-20 w-full p-8 flex flex-col justify-center items-center lg:hidden rounded-l-lg shadow-lg transition-transform duration-300 ease-in-out bg-neutral-100 dark:bg-neutral-900">
+    <ul className="flex flex-col space-y-6">
+      {navItems.map((item, index) => (
+        <li key={index} className="w-full">
+          <a
+            href={item.href}
+            className="block text-center text-neutral-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-500 transition duration-300 rounded-lg py-2 px-4"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div className="flex flex-col space-y-4 mt-6 w-full">
+      <button
+        onClick={() => { router('/login') }}
+        className="py-2 text-center border border-neutral-300 dark:border-neutral-700 rounded-lg transition duration-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 w-full text-left px-4 text-neutral-900 dark:text-white"
+      >
+        Sign In
+      </button>
+      <button
+        onClick={() => { router('/signup') }}
+        className="py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800 w-full text-left transition duration-300 hover:opacity-90 px-4 text-center text-white"
+      >
+        Create an account
+      </button>
+      <div className="flex justify-center mt-4">
+        <ModeToggle />
       </div>
-     
+    </div>
+  </div>
+)}
+
+
+      </div>
     </nav>
   );
 };

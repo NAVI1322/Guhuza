@@ -1,10 +1,4 @@
-import { BotMessageSquare } from "lucide-react";
-import { BatteryCharging } from "lucide-react";
-import { Fingerprint } from "lucide-react";
-import { ShieldHalf } from "lucide-react";
-import { PlugZap } from "lucide-react";
-import { GlobeLock } from "lucide-react";
-
+import { Gamepad, Star, UserCheck, Users, Award, Lock } from "lucide-react";
 import user1 from "../assets/profile-pictures/user1.jpg";
 import user2 from "../assets/profile-pictures/user2.jpg";
 import user3 from "../assets/profile-pictures/user3.jpg";
@@ -58,65 +52,56 @@ export const testimonials = [
   },
 ];
 
+
 export const features = [
   {
-    icon: <BotMessageSquare />,
+    icon: <Gamepad />,
     text: "Interactive Job-Seeking Challenges",
-    description:
-      "Engage with resume-building tasks, interview simulations, and career quizzes to level up your job-seeking skills.",
+    description: "Engage with resume-building tasks, interview simulations, and career quizzes to level up your job-seeking skills.",
   },
   {
-    icon: <Fingerprint />,
+    icon: <Star />,
     text: "Referral Bonuses & Rewards",
-    description:
-      "Invite friends and earn referral bonuses, badges, and rewards for expanding the Guhuza network.",
+    description: "Invite friends and earn referral bonuses, badges, and rewards for expanding the Guhuza network.",
   },
   {
-    icon: <ShieldHalf />,
+    icon: <Users />,
     text: "Career Leaderboards",
-    description:
-      "Compete with other users on leaderboards, achieve high scores, and showcase your career progression.",
+    description: "Compete with other users on leaderboards, achieve high scores, and showcase your career progression.",
   },
   {
-    icon: <BatteryCharging />,
+    icon: <UserCheck />,
     text: "Daily Challenges & Streaks",
-    description:
-      "Keep your momentum going with daily challenges, streaks, and seasonal events to stay motivated.",
+    description: "Keep your momentum going with daily challenges, streaks, and seasonal events to stay motivated.",
   },
   {
-    icon: <PlugZap />,
+    icon: <Lock />,
     text: "Social Sharing Options",
-    description:
-      "Share your achievements and progress with friends on social media to grow the Guhuza community.",
+    description: "Share your achievements and progress with friends on social media to grow the Guhuza community.",
   },
   {
-    icon: <GlobeLock />,
+    icon: <Award />,
     text: "Analytics & Insights",
-    description:
-      "Track your performance, see where you stand in the community, and use insights to improve your career strategies.",
+    description: "Track your performance, see where you stand in the community, and use insights to improve your career strategies.",
   },
 ];
 
 export const checklistItems = [
   {
     title: "Referral Bonuses for Network Expansion",
-    description:
-      "Increase your impact by referring friends and earning rewards for each successful connection.",
+    description: "Increase your impact by referring friends and earning rewards for each successful connection.",
   },
   {
     title: "Showcase Skills Through Interactive Games",
-    description:
-      "Prove your worth by participating in skill-based challenges that demonstrate your qualifications to potential employers.",
+    description: "Prove your worth by participating in skill-based challenges that demonstrate your qualifications to potential employers.",
   },
   {
     title: "Compete and Collaborate with Peers",
-    description:
-      "Make the job search fun by competing on leaderboards and collaborating with peers for team achievements.",
+    description: "Make the job search fun by competing on leaderboards and collaborating with peers for team achievements.",
   },
   {
     title: "Track Your Career Growth",
-    description:
-      "Monitor your progress, complete challenges, and earn badges that highlight your career journey.",
+    description: "Monitor your progress, complete challenges, and earn badges that highlight your career journey.",
   },
 ];
 
