@@ -1,3 +1,4 @@
+// the signupservice sends an otp to the user email genearted in server and proceeds to match it with the otp generated on server and then it gives a token
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../index';

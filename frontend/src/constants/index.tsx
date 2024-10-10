@@ -139,25 +139,20 @@ export const pricingOptions = [
 ];
 
 export const resourcesLinks = [
-  { href: "#", text: "Getting Started Guide" },
-  { href: "#", text: "Game Mechanics Documentation" },
-  { href: "#", text: "Tutorials & Tips" },
-  { href: "#", text: "API Reference" },
-  { href: "#", text: "Community Support" },
+  { href: "#", text: "AI Matching Guide" },
+  { href: "#", text: "Job Seeker Tutorials" },
+  { href: "#", text: "Employer Resources" },
 ];
 
 export const platformLinks = [
-  { href: "#", text: "Game Features" },
-  { href: "#", text: "Supported Platforms" },
-  { href: "#", text: "System Requirements" },
-  { href: "#", text: "Downloads" },
-  { href: "#", text: "Version History" },
+  { href: "#", text: "Guhuza Features Overview" },
+  { href: "#", text: "Supported Industries" },
+  { href: "#", text: "AI & Automation Benefits" },
+ 
 ];
 
 export const communityLinks = [
-  { href: "#", text: "Community Events" },
-  { href: "#", text: "User Meetups" },
-  { href: "#", text: "Industry Conferences" },
-  { href: "#", text: "Hackathons & Challenges" },
-  { href: "#", text: "Job Opportunities" },
+  { href: "#", text: "Success Stories" },
+  { href: "#", text: "Employer Meetups" },
+  { href: "#", text: "Industry Webinars" },
 ];

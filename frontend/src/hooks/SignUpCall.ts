@@ -1,3 +1,5 @@
+// this sends posts request to singup route with the email
+
 import axios from 'axios';
 
 const signUpCall = async (email: string, password: string) => {

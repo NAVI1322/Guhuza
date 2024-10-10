@@ -1,3 +1,5 @@
+// it handles the post request in singup and calls the signupservice with the email as argument
+
 import { Request, Response } from 'express';
 import { signupService, loginService, verifyOtpService } from '../services/authService';
 

@@ -40,11 +40,11 @@ export default function CarouselSize() {
       opts={{
         align: "start",
       }}
-      className="w-full max-w-4xl  m-auto mt-6 my-10 lg:my-20"
+      className="flex w-full max-w-4xl  m-auto mt-6 my-10 lg:my-20"
     >
       <CarouselContent>
         {cardData.map((item, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 ">
+          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
               <Card className="bg-blue-100 dark:bg-blue-900 "> {/* Background for light/dark modes */}
                 <CardContent className="flex flex-col items-center justify-center p-6 ">

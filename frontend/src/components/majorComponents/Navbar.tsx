@@ -5,6 +5,7 @@ import lightlogo from "../../assets/lightlogo.png";
 import { navItems } from "@/constants";
 import { ModeToggle } from "../theme/modeToggle";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -40,15 +41,10 @@ const Navbar = () => {
           </ul>
           {/* Desktop Actions */}
           <div className="hidden lg:flex justify-center space-x-8 items-center">
-            <button onClick={() => { router('/login') }} className="py-2 px-3 border rounded-md transition duration-300 hover:bg-neutral-700">
-              Sign In
-            </button>
-            <ModeToggle />
-            <button onClick={() => { router('/signup') }}
-              className="bg-gradient-to-r from-blue-500 to-blue-800 py-2 px-3 rounded-md transition duration-300 hover:opacity-90"
-            >
-              Create an account
-            </button>
+    
+            <Button variant={"myButton"} onClick={() => { router('/login') }}>Sign In</Button>
+            <ModeToggle/>
+            <Button variant={"myButton"} onClick={() => { router('/signup') }}>Create an account</Button>
           </div>
   {/* Mobile Menu Button */}
 <div className="lg:hidden md:flex flex-col justify-end">
@@ -86,7 +82,7 @@ const Navbar = () => {
       </button>
       <button
         onClick={() => { router('/signup') }}
-        className="py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800 w-full text-left transition duration-300 hover:opacity-90 px-4 text-center text-white"
+        className="py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800 w-full text-left transition duration-300 hover:opacity-90 px-4 text-center text-black dark:text-white"
       >
         Create an account
       </button>
