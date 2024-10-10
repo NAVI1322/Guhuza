@@ -4,10 +4,10 @@ interface BorderBeamDemoProps {
 }
 export function BorderBeamDemo({ image }: BorderBeamDemoProps) {
   return (
-    <div className="relative flex h-[250px] w-[250px] sm:h-[350px] sm:w-[350px] md:h-[400px] md:w-[400px] m-auto flex-col items-center justify-center overflow-hidden rounded-lg border bg-background shadow-xl">
+    <div className="relative flex h-[200px] w-[200px] sm:h-[300px] sm:w-[300px] md:h-[350px] md:w-[350px] m-auto flex-col items-center justify-center overflow-hidden rounded-lg border bg-background shadow-xl">
       <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-5xl sm:text-6xl md:text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
         <img
-          className="w-[250px] h-[250px] sm:w-[340px] sm:h-[340px] md:w-[390px] md:h-[390px] rounded-sm"
+          className="w-[190px] h-[190px] sm:w-[290px] sm:h-[290px] md:w-[340px] md:h-[340px] rounded-sm"
           src={image}
           alt="Illustration"
         />

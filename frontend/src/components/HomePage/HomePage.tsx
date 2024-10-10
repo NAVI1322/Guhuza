@@ -66,17 +66,20 @@ function HomePage() {
   };
   const timelineData: TimelineEntry[] = [
     // {
-    //   title: "Job Seeker Profile Creation",
+    //   title: "JOB_SEEKER Profile Creation",
     //   content: cloud,
     // },
     {
-      title: "Job Seeker Profile Creation",
+      title: "JOB_SEEKER Profile Creation",
       content: (
         <p className=''>
-          <div className='mb-0  sm:mb-20 max-w-sm m-auto'>
-            Job seekers begin by creating a comprehensive profile on the Guhuza platform. This includes detailed information about their skills, qualifications, work experience, education, and career aspirations. Users are encouraged to upload their resumes and provide additional information to enhance their visibility in the job market.
+          <div className='max-w-sm m-auto'>
+            JOB_SEEKERs begin by creating a comprehensive profile on the Guhuza platform. This includes detailed information about their skills, qualifications, work experience, education, and career aspirations. Users are encouraged to upload their resumes and provide additional information to enhance their visibility in the job market.
           </div>
+          <div className='my-10'>
           <BorderBeamDemo image={user1} />
+
+          </div>
         </p>
       ),
     },
@@ -84,10 +87,13 @@ function HomePage() {
       title: "AI Matching Technology Activation",
       content: (
         <p className=''>
-          <div className='mb-0  sm:mb-20 max-w-sm m-auto'>
-          Guhuza's advanced AI technology analyzes the job seeker’s profile against thousands of job listings on the platform. The AI evaluates the skills required for each position and ranks job matches based on relevance and alignment with the candidate's experience and qualifications. This process is designed to ensure that job seekers only see positions that are a good fit for their profiles.
+          <div className='max-w-sm m-auto'>
+          Guhuza's advanced AI technology analyzes the JOB_SEEKER’s profile against thousands of job listings on the platform. The AI evaluates the skills required for each position and ranks job matches based on relevance and alignment with the candidate's experience and qualifications. This process is designed to ensure that JOB_SEEKERs only see positions that are a good fit for their profiles.
         </div>
+        <div className='my-10'>
+          
           <BorderBeamDemo image={user2} />
+        </div>
           
         </p>
       ),
@@ -95,55 +101,70 @@ function HomePage() {
     {
       title: "Instant Job Matching and Connection",
       content: (
-        <p className=''><div className='mb-0  sm:mb-20 max-w-sm m-auto'>
+        <p className=''><div className='max-w-sm m-auto'>
 
-          Once a suitable match is identified, Guhuza's system instantly connects job seekers with potential employers. This eliminates the time-consuming process of applying to multiple positions, allowing candidates to focus on preparing for interviews. Job seekers receive real-time notifications about matches and can easily review job details.
+          Once a suitable match is identified, Guhuza's system instantly connects JOB_SEEKERs with potential employers. This eliminates the time-consuming process of applying to multiple positions, allowing candidates to focus on preparing for interviews. JOB_SEEKERs receive real-time notifications about matches and can easily review job details.
         </div>
+    <div className='my-10'>
+
           <BorderBeamDemo image={user3} />
+    </div>
         </p>
       ),
     },
     {
       title: "Live Interviews Through the Platform",
       content: (
-        <p className=''><div className='mb-0  sm:mb-20 max-w-sm m-auto'>
+        <p className=''><div className='max-w-sm m-auto'>
 
-          Employers can conduct live interviews with matched candidates directly through the Guhuza platform. The built-in video conferencing tools ensure a smooth interview process, allowing employers to assess candidates in real-time. Job seekers can showcase their skills and qualifications, making the interview more personal and interactive.
+          Employers can conduct live interviews with matched candidates directly through the Guhuza platform. The built-in video conferencing tools ensure a smooth interview process, allowing employers to assess candidates in real-time. JOB_SEEKERs can showcase their skills and qualifications, making the interview more personal and interactive.
         </div>
+    <div className='my-10'>
+
           <BorderBeamDemo image={user4} /> {/* Replace with appropriate user image */}
+    </div>
         </p>
       ),
     },
     {
       title: "Automated Hiring Process Management",
       content: (
-        <p className=''><div className='mb-0  sm:mb-20 max-w-sm m-auto'>
+        <p className=''><div className='max-w-sm m-auto'>
 
-          Guhuza automates the entire hiring process, from job openings to final job offers. The platform manages candidate screening, background checks, and necessary verifications in a streamlined manner. This ensures that both employers and job seekers can focus on what matters most: finding the right match without unnecessary delays or complications.
+          Guhuza automates the entire hiring process, from job openings to final job offers. The platform manages candidate screening, background checks, and necessary verifications in a streamlined manner. This ensures that both employers and JOB_SEEKERs can focus on what matters most: finding the right match without unnecessary delays or complications.
         </div>
+    <div className='my-10'>
+
           <BorderBeamDemo image={user5} /> {/* Replace with appropriate user image */}
+    </div>
         </p>
       ),
     },
     {
       title: "Quick Job Start in Less than 24 Hours",
       content: (
-        <p className=''><div className='mb-0  sm:mb-20 max-w-sm m-auto'>
+        <p className=''><div className='max-w-sm m-auto'>
 
-          After successful interviews and all required checks, candidates can begin their new jobs in less than 24 hours. This rapid turnaround time allows businesses to fill positions quickly, while job seekers can start their careers without long waiting periods. Guhuza's efficiency helps foster a dynamic job market where opportunities are seized swiftly.
+          After successful interviews and all required checks, candidates can begin their new jobs in less than 24 hours. This rapid turnaround time allows businesses to fill positions quickly, while JOB_SEEKERs can start their careers without long waiting periods. Guhuza's efficiency helps foster a dynamic job market where opportunities are seized swiftly.
         </div>
+    <div className='my-10'>
+
           <BorderBeamDemo image={user6} /> {/* Replace with appropriate user image */}
+    </div>
         </p>
       ),
     },
     {
       title: "Continuous Feedback and Improvement",
       content: (
-        <p className=''><div className='mb-0  sm:mb-20 max-w-sm m-auto'>
+        <p className=''><div className='max-w-sm m-auto'>
 
-          After the hiring process, both employers and job seekers are encouraged to provide feedback on their experiences. This feedback is crucial for Guhuza to continually refine and improve its matching algorithm and user experience. By analyzing this data, Guhuza aims to enhance the overall effectiveness of the platform and ensure the highest satisfaction for both job seekers and employers.
+          After the hiring process, both employers and JOB_SEEKERs are encouraged to provide feedback on their experiences. This feedback is crucial for Guhuza to continually refine and improve its matching algorithm and user experience. By analyzing this data, Guhuza aims to enhance the overall effectiveness of the platform and ensure the highest satisfaction for both JOB_SEEKERs and employers.
         </div>
+    <div className='my-10'>
+
           <BorderBeamDemo image={user7} /> {/* Replace with appropriate user image */}
+    </div>
         </p>
       ),
     },

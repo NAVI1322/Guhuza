@@ -1,10 +1,8 @@
-// email from here goes to signupcall hooks that sends the email to the signup route that called the signupserivce function
-
 import signUpCall from '@/hooks/SignUpCall';
 import React, { useState } from 'react';
-import { Input } from '../ui/input'; // Import custom Input component
+import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import FlickeringGrid from '../ui/flickering-grid';
 import {
   Select,
@@ -15,30 +13,69 @@ import {
 } from "@/components/ui/select"
 
 const Signup = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await signUpCall(email, password);
-      alert(response.email)
-      // Redirect to login route after successful signup
-      navigate('/login'); // Use navigate to redirect to the login route
-
-      // Clear input fields
-      setEmail('');
-      setPassword('');
+      await signUpCall(email);
+      setStep(2);
     } catch (err) {
-      // Handle signup error here if needed (e.g., alert user)
-      console.error('Signup failed:', err);
+      console.error('Email submission failed:', err);
+    }
+  };
+
+  const handleOtpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signUpCall(email, otp);
+      setStep(3);
+    } catch (err) {
+      console.error('OTP verification failed:', err);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    try {
+      await signUpCall(email, undefined, undefined, undefined, undefined, true); // Resend OTP
+      alert('OTP resent to your email');
+    } catch (err) {
+      console.error('Resending OTP failed:', err);
+    }
+  };
+
+  const handleRoleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signUpCall(email, otp, role);
+      setStep(4);
+    } catch (err) {
+      console.error('Role submission failed:', err);
+    }
+  };
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+      await signUpCall(email, otp, role, password, confirmPassword);
+      // navigate('/login'); // Redirect to login after successful signup
+    } catch (err) {
+      console.error('Password setup failed:', err);
     }
   };
 
   return (
     <div className="relative flex items-center justify-center min-h-screen">
-      {/* Flickering Grid Background */}
       <FlickeringGrid
         className="z-0 absolute inset-0 size-full"
         squareSize={4}
@@ -47,60 +84,107 @@ const Signup = () => {
         maxOpacity={0.5}
         flickerChance={0.1}
       />
-
-      {/* Signup Form Container */}
       <div className="bg-white dark:bg-blue-800/20 shadow-lg rounded-lg p-6 sm:p-8 max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 z-10">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">Signup</h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-          <Select>
-  <SelectTrigger className="w-full bg-gray-600 hover:bg-gray-700 text-white mb-6 rounded-md">
-    <SelectValue placeholder="Who are you?" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="light">Job Seeker</SelectItem>
-    <SelectItem value="dark">Recruiter</SelectItem>
-    <SelectItem value="system">Staffing Firm</SelectItem>
-  </SelectContent>
-</Select>
-            <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="email">
-              Email:
-            </label>
-            <Input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="password">
-              Password:
-            </label>
-            <Input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-            />
-          </div>
-   
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
-          >
-            Sign Up
-          </Button>
-          <div className="text-center">
-            Already have an account?
-            <Link to="/login" className="ml-2 text-blue-300 hover:text-blue-500">Login</Link>
-          </div>
-        </form>
+        {step === 1 && (
+          <form onSubmit={handleEmailSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="email">
+                Email:
+              </label>
+              <Input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+              Send OTP
+            </Button>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form onSubmit={handleOtpSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="otp">
+                OTP:
+              </label>
+              <Input
+                type="text"
+                id="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+              Verify OTP
+            </Button>
+            <Button type="button" onClick={handleResendOtp} className="w-full text-blue-600 hover:text-blue-800">
+              Resend OTP
+            </Button>
+          </form>
+        )}
+
+        {step === 3 && (
+          <form onSubmit={handleRoleSubmit}>
+            <div className="mb-4">
+              <Select onValueChange={setRole}>
+                <SelectTrigger className="w-full bg-gray-600 hover:bg-gray-700 text-white mb-6 rounded-md">
+                  <SelectValue placeholder="Who are you?" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="JOB_SEEKER">JOB_SEEKER</SelectItem>
+                  <SelectItem value="RECRUITER">RECRUITER</SelectItem>
+                  <SelectItem value="STAFFING_FIRM">STAFFING_FIRM</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+              Set Role
+            </Button>
+          </form>
+        )}
+
+        {step === 4 && (
+          <form onSubmit={handlePasswordSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="password">
+                Password:
+              </label>
+              <Input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="confirmPassword">
+                Confirm Password:
+              </label>
+              <Input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+              Create Account
+            </Button>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+// takes the email and code and sends it to the email in a customized html
 import nodemailer from 'nodemailer';
 
 export const sendVerificationEmail = async (email: string, code: string) => {

@@ -1,81 +1,91 @@
-// the signupservice sends an otp to the user email genearted in server and proceeds to match it with the otp generated on server and then it gives a token
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { prisma } from '../index';
-import { JWT_SECRET } from '../config';
 import { sendVerificationEmail } from '../utils/emailSender';
-import { Prisma } from '@prisma/client'; // Make sure to import Prisma
+import { PrismaClient, Prisma } from '@prisma/client'; // Combine imports for better readability
+import bcrypt from 'bcrypt';
 
-// Generate random OTP
-const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
+// In-memory store for OTPs
+const inMemoryOTPStore: { [key: string]: { otp: string, expiry: number } } = {}; 
 
+// Initialize Prisma Client
+const prisma = new PrismaClient();
 
-export const signupService = async (email: string, password: string, role: string) => {
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  try {
-    const user = await prisma.user.create({
-      data: { email, password: hashedPassword, role }
-    });
-    return user;
-  } catch (error) {
-    // Use type assertion to specify the type of error
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // Handle specific Prisma error codes
-      if (error.code === 'P2002') { // Prisma unique constraint error code
-        throw new Error('Email already in use');
-      }
-    }
-    
-    // Generic error handling
-    throw new Error('Error creating user');
+// Generate a random OTP
+const generateOTP = (length: number = 6): string => {
+  if (length < 1) {
+    throw new Error('OTP length must be at least 1');
   }
+  const otp = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit OTP
+  return otp.toString().slice(0, length); // Ensure it is the correct length
 };
 
-
-export const loginService = async (email: string, password: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new Error('User not found');
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) throw new Error('Invalid credentials');
-
-  // Generate OTP for 2FA
-  const otp = generateOTP();
-  const expiryTime = new Date(Date.now() + 1 * 60 * 1000); // OTP valid for 1 minutes
-
-  // Save OTP and expiry time temporarily to the user record
-  await prisma.user.update({
+// Service to send OTP to email
+export const sendOTPService = async (email: string) => {
+  const existingUser = await prisma.user.findUnique({
     where: { email },
-    data: { otp, otpExpiry: expiryTime }  // Assuming an OTP field is added to the User model
   });
+
+  if (existingUser) {
+    throw new Error('Email already exists. Please use a different email.');
+  }
+
+  const otp = generateOTP();
+  const expiry = Date.now() + 5 * 60 * 1000; // OTP valid for 5 minutes
+
+  // Save OTP and expiry time in memory
+  inMemoryOTPStore[email] = { otp, expiry };
 
   // Send OTP via email
   await sendVerificationEmail(email, otp);
 
-  return { message: 'OTP sent to email' };
+  return { message: 'OTP sent to your email' };
 };
 
-// Verify the OTP entered by the user
+// Service to verify the OTP
 export const verifyOtpService = async (email: string, otp: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.otp !== otp) throw new Error('Invalid OTP');
+  const otpData = inMemoryOTPStore[email];
 
-  const currentTime = new Date();
+  if (!otpData) throw new Error('No OTP sent to this email');
 
-  // Check if OTP has expired
-  if (user.otpExpiry && currentTime > new Date(user.otpExpiry)) {
-    throw new Error('OTP has expired');
+  // Check if OTP matches and has not expired
+  if (otpData.otp !== otp) throw new Error('Invalid OTP');
+  if (Date.now() > otpData.expiry) throw new Error('OTP has expired');
+
+  // Clear the OTP after verification
+  delete inMemoryOTPStore[email];
+
+  return { message: 'OTP verified successfully' };
+};
+
+// Service to set the user role
+export const setRoleService = async (email: string, role: string) => {
+  const allowedRoles = ['JOB_SEEKER', 'RECRUITER', 'STAFFING_FIRM'];
+
+  if (!allowedRoles.includes(role)) {
+    throw new Error('Invalid role. Choose either "JOB_SEEKER", "RECRUITER", or "STAFFING_FIRM".');
   }
 
-  // Clear OTP after successful verification
-  await prisma.user.update({
-    where: { email },
-    data: { otp: null, otpExpiry: null }  // Clear OTP and expiry time
-  });
+  return { message: `Role set to ${role}` };
+};
 
-  // Generate JWT token
-  const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+// Service to create a user
+export const createUserService = async (email: string, password: string, role: 'JOB_SEEKER' | 'RECRUITER' | 'STAFFING_FIRM') => {
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  return token;
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        role,
+      },
+    });
+    
+    return { message: 'User created successfully', user };
+  } catch (error) {
+    // Handle Prisma error for unique email constraint
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      throw new Error('Email already in use');
+    }
+    
+    throw new Error('Error creating user');
+  }
 };

@@ -30,7 +30,7 @@ export const testimonials = [
     user: "David Johnson",
     company: "Quantum Innovations",
     image: user3,
-    text: "Guhuza’s game is an innovative tool that connects job seekers and companies in a unique, interactive way. Highly recommend it!",
+    text: "Guhuza’s game is an innovative tool that connects JOB_SEEKERs and companies in a unique, interactive way. Highly recommend it!",
   },
   {
     user: "Ronee Brown",
@@ -140,7 +140,7 @@ export const pricingOptions = [
 
 export const resourcesLinks = [
   { href: "#", text: "AI Matching Guide" },
-  { href: "#", text: "Job Seeker Tutorials" },
+  { href: "#", text: "JOB_SEEKER Tutorials" },
   { href: "#", text: "Employer Resources" },
 ];
 

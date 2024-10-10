@@ -14,13 +14,13 @@ const HeroSection = () => {
         </span>
       </h1>
       <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-      Our advanced technology matches the job seekers profile with jobs on our site and ranks them for our employers based on skills required for the position. Once the match has been made, live interviews can be conducted immediately right through our platform!
+      Our advanced technology matches the JOB_SEEKERs profile with jobs on our site and ranks them for our employers based on skills required for the position. Once the match has been made, live interviews can be conducted immediately right through our platform!
       </p>
 
       <div className="flex flex-col md:flex-row justify-center my-10 relative gap-5 md:gap-0">
-  <Button variant={"myButton"} aria-label="Job Seeker">I am a Job Seeker</Button>
+  <Button variant={"myButton"} aria-label="JOB_SEEKER">I am a JOB_SEEKER</Button>
   <Button variant={"myButton"} aria-label="Employer">I am an Employer</Button>
-  <Button variant={"myButton"} aria-label="Staffing Firm">I am a Staffing Firm</Button>
+  <Button variant={"myButton"} aria-label="STAFFING_FIRM">I am a STAFFING_FIRM</Button>
 </div>
    
 
