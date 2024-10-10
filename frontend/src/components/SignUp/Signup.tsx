@@ -23,7 +23,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await signUpCall(email, password);
-
+      alert(response.email)
       // Redirect to login route after successful signup
       navigate('/login'); // Use navigate to redirect to the login route
 

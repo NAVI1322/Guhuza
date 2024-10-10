@@ -8,7 +8,7 @@ import Footer from '../majorComponents/Footer'
 import Navbar from '../majorComponents/Navbar'
 import { CardHoverEffectDemo } from '../majorComponents/HoverEffect'
 import { MarqueeDemo } from '../majorComponents/Marqe'
-import { TypewriterEffectSmoothDemo } from '../majorComponents/Bye'
+
 
 import CarouselSize from "../Carousel";
 import { Timeline } from '../ui/timeline'
