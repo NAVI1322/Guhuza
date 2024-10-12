@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const verifyCall = async (email: string, password: string, otp: string) => {
   try {
-    const response = await axios.post('http://localhost:5000/auth/verify-2fa', {
+    const response = await axios.post('http://localhost:3000/auth/verify-2fa', {
       email: email,
       password: password,
       otp: otp,

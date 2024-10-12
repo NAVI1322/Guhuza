@@ -2,26 +2,25 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import { loginCall } from '@/hooks/LoginCall'; // Ensure this path is correct
 import FlickeringGrid from '../ui/flickering-grid'; // Import FlickeringGrid for background
+import { Toast } from '../toaster/toast';
 
 const Login = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  
 
   // Handle form submission for login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await loginCall(email, password);
-      setMessage(response.message);
-      setError(null);
-      // Redirect to the Verify2FA page after successful login and OTP initiation
-      navigate('/verify-2fa');
+       await loginCall(email, password);
+ 
+      Toast("Success","Login Successfully")
+      navigate("/dashboard");
+
     } catch (err) {
-      setMessage(null);
-      setError('Login failed. Please try again.');
+      Toast("Failed","Email/Password is incorrect","Try again")
     }
   };
 
@@ -40,8 +39,7 @@ const Login = () => {
       {/* Login Form Container */}
       <div className="bg-white dark:bg-blue-800/20 shadow-lg rounded-lg p-6 sm:p-8 max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 z-10">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">Welcome Back!</h2>
-        {message && <div className="text-green-600">{message}</div>}
-        {error && <div className="text-red-600">{error}</div>}
+       
 
         <form onSubmit={handleLogin}>
           <div className="mb-4">

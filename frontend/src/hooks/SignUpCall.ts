@@ -1,19 +1,23 @@
+import { Toast } from '@/components/toaster/toast';
 import axios from 'axios';
 
 const signUpCall = async (email: string, otp?: string, role?: string, password?: string, confirmPassword?: string, resendOtp?: boolean) => {
   try {
     // Step 1: Send email to get OTP
     if (!otp && !role && !password) {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'email',
         email: email,
       });
+      
+
+
       return response.data; // Return the data from the API (OTP sent)
     }
 
     // Step 2: Verify OTP
     if (otp && !role && !password) {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'verifyOtp',
         email: email,
         otp: otp,
@@ -23,7 +27,7 @@ const signUpCall = async (email: string, otp?: string, role?: string, password?:
 
     // Resend OTP
     if (resendOtp) {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'resendOtp',
         email: email,
       });
@@ -32,7 +36,7 @@ const signUpCall = async (email: string, otp?: string, role?: string, password?:
 
     // Step 3: Set Role
     if (otp && role && !password) {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'setRole',
         email: email,
         role: role,
@@ -42,7 +46,7 @@ const signUpCall = async (email: string, otp?: string, role?: string, password?:
 
     // Step 4: Create User with Password
     if (otp && role && password && confirmPassword) {
-      const response = await axios.post('http://localhost:5000/auth/signup', {
+      const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'createUser',
         email: email,
         password: password,
@@ -58,8 +62,10 @@ const signUpCall = async (email: string, otp?: string, role?: string, password?:
     } else {
       console.error('Error message:', error.message);
     }
+    Toast("Failed","Something Went Wrong","Try again");
     throw error;
   }
 };
 
 export default signUpCall;
+

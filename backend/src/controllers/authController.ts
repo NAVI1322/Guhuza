@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendOTPService, verifyOtpService, setRoleService, createUserService } from '../services/authService';
+import { sendOTPService, verifyOtpService, setRoleService, createUserService, loginService } from '../services/authService';
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
   const { step, email, otp, role, password, confirmPassword } = req.body;
@@ -7,7 +7,8 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     // Step 1: Send OTP to email
     if (step === 'email') {
-      await sendOTPService(email);
+    await sendOTPService(email);
+      
       res.status(200).json({ message: 'OTP sent to your email' });
       return;
     }
@@ -52,23 +53,33 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 };
 
 
-// export const login = async (req: Request, res: Response) => {
-//   try {
-//     const { email, password } = req.body;
-//     const response = await loginService(email, password); // Sends OTP on successful login
-//     res.status(200).json(response);
-//   } catch (error) {
-//     res.status(400).json({ message: (error as Error).message });
-//   }
-// };
+export const login = async (req: Request, res: Response) => {
+  try {
 
-// // Verify OTP and generate final token
-// export const verify2FA = async (req: Request, res: Response) => {
-//   const { email, otp } = req.body;
-//   try {
-//     const token = await verifyOtpService(email, otp);
-//     res.status(200).json({ message: '2FA verified successfully', token });
-//   } catch (error) {
-//     res.status(400).json({ message: (error as Error).message });
-//   }
-// };
+    const { email, password } = req.body;
+    const response = await loginService(email, password);
+
+    if(response.success!=true)
+      res.status(400).json({
+    Status:"failed",
+    message:"login failed/ Email or password is incorrect"})
+
+    else
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
+
+// Verify OTP and generate final token
+export const verify2FA = async (req: Request, res: Response) => {
+  const { email, otp } = req.body;
+  try {
+    const token = await verifyOtpService(email, otp);
+    res.status(200).json({ message: '2FA verified successfully', token });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
+
+

@@ -1,33 +1,41 @@
-import signUpCall from '@/hooks/SignUpCall';
-import React, { useState } from 'react';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
-import FlickeringGrid from '../ui/flickering-grid';
+import signUpCall from "@/hooks/SignUpCall";
+import React, { useState } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import FlickeringGrid from "../ui/flickering-grid";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import { Loader } from "../loading /loader";
+
+import { Toast } from "../toaster/toast";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const [role, setRole] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, SetLoading] = useState(false);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
+ 
     e.preventDefault();
     try {
       await signUpCall(email);
+      Toast("Success","OTP sent Successfully","Undo");
+      
+    
       setStep(2);
     } catch (err) {
-      console.error('Email submission failed:', err);
+      console.error("Email submission failed:", err);
     }
   };
 
@@ -37,16 +45,19 @@ const Signup = () => {
       await signUpCall(email, otp);
       setStep(3);
     } catch (err) {
-      console.error('OTP verification failed:', err);
+      console.error("OTP verification failed:", err);
     }
   };
 
   const handleResendOtp = async () => {
     try {
-      await signUpCall(email, undefined, undefined, undefined, undefined, true); // Resend OTP
-      alert('OTP resent to your email');
+     await signUpCall(email, undefined, undefined, undefined, undefined, true); // Resend OTP
+
+      Toast("OTP has sent again","Check your Mail inbox","undo");
+
+    
     } catch (err) {
-      console.error('Resending OTP failed:', err);
+      console.error("Resending OTP failed:", err);
     }
   };
 
@@ -56,21 +67,33 @@ const Signup = () => {
       await signUpCall(email, otp, role);
       setStep(4);
     } catch (err) {
-      console.error('Role submission failed:', err);
+      console.error("Role submission failed:", err);
     }
   };
 
+
+  // handle password submit step 5
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (password !== confirmPassword) {
-        alert('Passwords do not match');
+        Toast("Failed","Password not matching");
         return;
       }
-      await signUpCall(email, otp, role, password, confirmPassword);
-      // navigate('/login'); // Redirect to login after successful signup
+
+     const res =  await signUpCall(email, otp, role, password, confirmPassword);
+
+     console.log(res);
+
+     Toast("Success","Account Created Successfully","Undo");
+
+      navigate('/login');
+
+
+
     } catch (err) {
-      console.error('Password setup failed:', err);
+      console.error("Password setup failed:", err);
+      Toast("Failed","Something went Wrong");
     }
   };
 
@@ -85,12 +108,17 @@ const Signup = () => {
         flickerChance={0.1}
       />
       <div className="bg-white dark:bg-blue-800/20 shadow-lg rounded-lg p-6 sm:p-8 max-w-xs sm:max-w-sm w-full transform transition-transform duration-300 z-10">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">Signup</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">
+          Signup
+        </h2>
 
         {step === 1 && (
           <form onSubmit={handleEmailSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="email">
+              <label
+                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+                htmlFor="email"
+              >
                 Email:
               </label>
               <Input
@@ -102,16 +130,25 @@ const Signup = () => {
                 className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
-              Send OTP
-            </Button>
+            {loading ? (
+               <Loader />
+             
+            ) : (
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+              >Send OTP</Button>
+            )}
           </form>
         )}
 
         {step === 2 && (
           <form onSubmit={handleOtpSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="otp">
+              <label
+                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+                htmlFor="otp"
+              >
                 OTP:
               </label>
               <Input
@@ -123,10 +160,17 @@ const Signup = () => {
                 className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+            >
               Verify OTP
             </Button>
-            <Button type="button" onClick={handleResendOtp} className="w-full text-blue-600 hover:text-blue-800">
+            <Button
+              type="button"
+              onClick={handleResendOtp}
+              className="w-full text-blue-600 hover:text-blue-800"
+            >
               Resend OTP
             </Button>
           </form>
@@ -146,7 +190,10 @@ const Signup = () => {
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+            >
               Set Role
             </Button>
           </form>
@@ -155,7 +202,10 @@ const Signup = () => {
         {step === 4 && (
           <form onSubmit={handlePasswordSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="password">
+              <label
+                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+                htmlFor="password"
+              >
                 Password:
               </label>
               <Input
@@ -168,7 +218,10 @@ const Signup = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="confirmPassword">
+              <label
+                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+                htmlFor="confirmPassword"
+              >
                 Confirm Password:
               </label>
               <Input
@@ -180,7 +233,10 @@ const Signup = () => {
                 className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+            >
               Create Account
             </Button>
           </form>

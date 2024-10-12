@@ -1,4 +1,7 @@
 
+import { Button } from "../ui/button";
+import { Toast } from "../toaster/toast";
+
 const Dashboard = () => {
   return (
     <div className="p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
@@ -25,7 +28,8 @@ const Dashboard = () => {
         {/* Add more cards as needed */}
       </div>
     </div>
-  );
+  )
+  
 };
 
 export default Dashboard;

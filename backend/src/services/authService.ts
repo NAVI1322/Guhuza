@@ -19,24 +19,16 @@ const generateOTP = (length: number = 6): string => {
 
 // Service to send OTP to email
 export const sendOTPService = async (email: string) => {
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (existingUser) {
-    throw new Error('Email already exists. Please use a different email.');
-  }
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) throw new Error('User already exists. Please log in.');
 
   const otp = generateOTP();
-  const expiry = Date.now() + 5 * 60 * 1000; // OTP valid for 5 minutes
+  const expiry = Date.now() + 5 * 60 * 1000; 
 
-  // Save OTP and expiry time in memory
   inMemoryOTPStore[email] = { otp, expiry };
 
-  // Send OTP via email
   await sendVerificationEmail(email, otp);
-
-  return { message: 'OTP sent to your email' };
+  return { message: 'OTP sent to your email for signup verification' };
 };
 
 // Service to verify the OTP
@@ -52,7 +44,9 @@ export const verifyOtpService = async (email: string, otp: string) => {
   // Clear the OTP after verification
   delete inMemoryOTPStore[email];
 
-  return { message: 'OTP verified successfully' };
+  return { 
+    status:"success",
+    message: 'OTP verified successfully' };
 };
 
 // Service to set the user role
@@ -77,6 +71,10 @@ export const createUserService = async (email: string, password: string, role: '
         password: hashedPassword,
         role,
       },
+      select:{
+        email:true,
+        role:true,
+      }
     });
     
     return { message: 'User created successfully', user };
@@ -87,5 +85,35 @@ export const createUserService = async (email: string, password: string, role: '
     }
     
     throw new Error('Error creating user');
+  }
+};
+
+export const loginService = async (email: string, password: string) => {
+  try {
+    // Find the user by email
+    const userExist = await prisma.user.findUnique({
+      where: { email: email }, // Use the variable 'email'
+      select: { password: true }, // Fetch only the password
+    });
+
+    
+    // Check if user does not exist
+    if (!userExist) {
+      return { success: false, message: 'User does not exist' };
+    }
+
+    // Verify the password
+    const isPasswordValid = await bcrypt.compare(password, userExist.password);
+    if (!isPasswordValid) {
+      return { success: false, message: 'Invalid password' };
+    }
+
+ 
+
+    // If user exists and password is correct
+    return { success: true, message: 'Login successful' };
+  } catch (error) {
+    console.error('Login Error:', error);
+    return { success: false, message: 'An error occurred during login' };
   }
 };
