@@ -42,7 +42,7 @@ const Login = () => {
        
 
         <form onSubmit={handleLogin}>
-          <div className="mb-4">
+          <div className="mb dark:text-white ">
             <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="email">
               Email:
             </label>
@@ -52,11 +52,11 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              className="w-full p-2 bg-white border text-sm border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="password">
+          <div className="mb-4 mt-2">
+            <label className="block  text-gray-700 dark:text-gray-300 font-bold mb-2" htmlFor="password">
               Password:
             </label>
             <input
@@ -65,7 +65,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              className="w-full p-2 border bg-white text-sm  border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
           </div>
           <button
@@ -74,7 +74,7 @@ const Login = () => {
           >
             Login
           </button>
-          <div className="text-center">
+          <div className="text-center text-sm">
             New here?
             <Link to="/signup" className="ml-2 text-blue-300 hover:text-blue-500">Sign up</Link>
           </div>

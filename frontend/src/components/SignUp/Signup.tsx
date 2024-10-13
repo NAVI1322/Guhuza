@@ -2,7 +2,7 @@ import signUpCall from "@/hooks/SignUpCall";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FlickeringGrid from "../ui/flickering-grid";
 import {
   Select,
@@ -138,7 +138,12 @@ const Signup = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
               >Send OTP</Button>
+             
             )}
+            <div className="text-center text-sm">
+            Already have an Account
+            <Link to="/login" className="ml-2 text-blue-300 hover:text-blue-500 ">Sign up</Link>
+          </div>
           </form>
         )}
 
