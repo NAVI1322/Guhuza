@@ -1,6 +1,7 @@
 import { sendVerificationEmail } from '../utils/emailSender';
 import { PrismaClient, Prisma } from '@prisma/client'; // Combine imports for better readability
 import bcrypt from 'bcrypt';
+import { create } from 'domain';
 
 // In-memory store for OTPs
 const inMemoryOTPStore: { [key: string]: { otp: string, expiry: number } } = {}; 
@@ -51,43 +52,75 @@ export const verifyOtpService = async (email: string, otp: string) => {
 
 // Service to set the user role
 export const setRoleService = async (email: string, role: string) => {
-  const allowedRoles = ['JOB_SEEKER', 'RECRUITER', 'STAFFING_FIRM'];
+  const allowedRoles = ['JOB_SEEKER', 'RECRUITER'];
 
   if (!allowedRoles.includes(role)) {
-    throw new Error('Invalid role. Choose either "JOB_SEEKER", "RECRUITER", or "STAFFING_FIRM".');
+    throw new Error('Invalid role. Choose either "JOB_SEEKER", "RECRUITER"');
   }
 
   return { message: `Role set to ${role}` };
 };
 
 // Service to create a user
-export const createUserService = async (email: string, password: string, role: 'JOB_SEEKER' | 'RECRUITER' | 'STAFFING_FIRM') => {
+export const createUserService = async (
+  email: string,
+  password: string,
+  role: 'JOB_SEEKER' | 'RECRUITER',
+  firstName?: string,
+  lastName?: string,
+  companyName?: string
+) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
+
+    console.log(companyName + " in auth services")
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
         role,
+        Employee: role === 'JOB_SEEKER' ? {
+          create: {
+            firstName: firstName || '', // Provide a default value
+            lastName: lastName || '',
+            email: email,
+            createdAt: new Date(), // Correctly initialize with parentheses
+          }
+        } : undefined, // Create employee only if the role is JOB_SEEKER
+        Recruiter: role === 'RECRUITER' ? {
+          create: {
+            firstName: firstName || '', // Provide a default value
+            lastName: lastName || '',
+            email: email,
+            companyName: companyName || '', // Provide a default value
+            createdAt: new Date(), // Correctly initialize with parentheses
+          }
+        } : undefined // Create recruiter only if the role is RECRUITER
       },
-      select:{
-        email:true,
-        role:true,
+      select: {
+        email: true,
+        role: true,
+        Employee: {
+          select: {
+            firstName: true,
+            lastName: true,
+            about: true,
+          }
+        }
       }
     });
-    
+
     return { message: 'User created successfully', user };
   } catch (error) {
     // Handle Prisma error for unique email constraint
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
       throw new Error('Email already in use');
     }
-    
+
     throw new Error('Error creating user');
   }
 };
-
 export const loginService = async (email: string, password: string) => {
   try {
     // Find the user by email

@@ -3,6 +3,7 @@ import express from 'express';
   // Import cors
   // Ensure correct import of config
 import authRoutes from './routes/authRoutes';
+import updateRoute from './routes/updateRoute';
 import { PORT } from './config';
 import cors from 'cors'; // Correct import of cors
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Define your routes
 app.use('/auth', authRoutes);
+app.use('/update', updateRoute);
 
 // Start the server 
 app.listen(PORT, () => {

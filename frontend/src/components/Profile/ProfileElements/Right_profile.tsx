@@ -33,7 +33,7 @@ const RightProfile = () => {
   }, [id, Domain]); // Dependency array
 
   return (
-    <div className="flex md:w-[40%] p-4">
+    <div className="flex md:w-[40%] p-4 dark:bg-black bg-white">
       <div className="space-y-5 font-medium">
         <div className="rounded-full">
           <img className="rounded-full w-20 h-20" src="https://picsum.photos/400/400" alt="Profile picture" />

@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
-  role     Role   // Enum for JOB_SEEKER, RECRUITER
+  role     Role
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Employee Employee? // Relation to Employee model (optional)
-  Recruiter Recruiter? // Relation to Recruiter model (optional)
+  updatedAt DateTime? @updatedAt // Add this default value to fix the issue
+  Employee Employee?
+  Recruiter Recruiter?
 }
 
 model Employee {
@@ -23,23 +23,26 @@ model Employee {
   firstName String
   lastName  String
   email     String  @unique
-  about     String
+  about     String?
   userId    Int     @unique // Foreign key to User
   user      User    @relation(fields: [userId], references: [id])
   history   E_History[]
   archived  E_Archive[]
   applications Application[] // Applications submitted by the employee
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime? @updatedAt
 }
 
 model Recruiter {
   id          String  @id @default(uuid())
   companyName String
+  firstName  String
+  lastName   String
+  email       String
   userId      Int     @unique // Foreign key to User
   user        User    @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime?  @updatedAt
 
   Application Application[]
 }

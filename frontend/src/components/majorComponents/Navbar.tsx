@@ -42,7 +42,7 @@ const Navbar = () => {
           {/* Desktop Actions */}
           <div className="hidden lg:flex justify-center space-x-8 items-center">
     
-            <Button variant={"myButton"} onClick={() => { router('/login') }}>Sign In</Button>
+            <Button variant="outline" onClick={() => { router('/login') }}>Sign In</Button>
             <ModeToggle/>
             <Button variant={"myButton"} onClick={() => { router('/signup') }}>Create an account</Button>
           </div>

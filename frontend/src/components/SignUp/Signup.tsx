@@ -23,16 +23,18 @@ const Signup = () => {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName,SetfirstName] = useState("");
+  const [lastName,SetlastName] = useState("");
+  const [CName,SetCName] = useState("");
   const [loading, SetLoading] = useState(false);
+  
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
- 
     e.preventDefault();
     try {
       await signUpCall(email);
-      Toast("Success","OTP sent Successfully","Undo");
-      
-    
+      Toast("Success", "OTP sent Successfully", "Undo");
+
       setStep(2);
     } catch (err) {
       console.error("Email submission failed:", err);
@@ -51,11 +53,9 @@ const Signup = () => {
 
   const handleResendOtp = async () => {
     try {
-     await signUpCall(email, undefined, undefined, undefined, undefined, true); // Resend OTP
+      await signUpCall(email, undefined, undefined, undefined, undefined, true , undefined, undefined); // Resend OTP
 
-      Toast("OTP has sent again","Check your Mail inbox","undo");
-
-    
+      Toast("OTP has sent again", "Check your Mail inbox", "undo");
     } catch (err) {
       console.error("Resending OTP failed:", err);
     }
@@ -71,29 +71,26 @@ const Signup = () => {
     }
   };
 
-
   // handle password submit step 5
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
+  const handleUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (password !== confirmPassword) {
-        Toast("Failed","Password not matching");
+        Toast("Failed", "Password not matching");
         return;
       }
 
-     const res =  await signUpCall(email, otp, role, password, confirmPassword);
+    
+      const res = await signUpCall(email, otp, role, password, confirmPassword ,undefined, firstName, lastName ,CName );
 
-     console.log(res);
+      console.log(res);
 
-     Toast("Success","Account Created Successfully","Undo");
+      Toast("Success", "Account Created Successfully", "Undo");
 
-      navigate('/login');
-
-
-
+      navigate("/login");
     } catch (err) {
       console.error("Password setup failed:", err);
-      Toast("Failed","Something went Wrong");
+      Toast("Failed", "Something went Wrong");
     }
   };
 
@@ -131,19 +128,24 @@ const Signup = () => {
               />
             </div>
             {loading ? (
-               <Loader />
-             
+              <Loader />
             ) : (
               <Button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
-              >Send OTP</Button>
-             
+              >
+                Send OTP
+              </Button>
             )}
             <div className="text-center text-sm">
-            Already have an Account
-            <Link to="/login" className="ml-2 text-blue-300 hover:text-blue-500 ">Sign up</Link>
-          </div>
+              Already have an Account
+              <Link
+                to="/login"
+                className="ml-2 text-blue-300 hover:text-blue-500 "
+              >
+                Sign up
+              </Link>
+            </div>
           </form>
         )}
 
@@ -189,9 +191,8 @@ const Signup = () => {
                   <SelectValue placeholder="Who are you?" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="JOB_SEEKER">JOB_SEEKER</SelectItem>
-                  <SelectItem value="RECRUITER">RECRUITER</SelectItem>
-                  <SelectItem value="STAFFING_FIRM">STAFFING_FIRM</SelectItem>
+                  <SelectItem value="JOB_SEEKER">Employee</SelectItem>
+                  <SelectItem value="RECRUITER">Recruiter</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -204,48 +205,180 @@ const Signup = () => {
           </form>
         )}
 
-        {step === 4 && (
-          <form onSubmit={handlePasswordSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
-                htmlFor="password"
-              >
-                Password:
-              </label>
-              <Input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
-                htmlFor="confirmPassword"
-              >
-                Confirm Password:
-              </label>
-              <Input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-              />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
-            >
-              Create Account
-            </Button>
-          </form>
-        )}
+      {/* handle User Submit */}
+      {step === 4 && (
+  role === "JOB_SEEKER" ? (
+    <form onSubmit={handleUserSubmit}>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="FirstName"
+        >
+          First Name:
+        </label>
+        <Input
+          type="text"
+          id="FirstName"
+          value={firstName}
+          onChange={(e) => SetfirstName(e.target.value)} // Fixed capitalization
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="LastName"
+        >
+          Last Name:
+        </label>
+        <Input
+          type="text"
+          id="LastName"
+          value={lastName}
+          onChange={(e) => SetlastName(e.target.value)} // Fixed capitalization
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="password"
+        >
+          Password:
+        </label>
+        <Input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="confirmPassword"
+        >
+          Confirm Password:
+        </label>
+        <Input
+          type="password"
+          id="confirmPassword"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <Button
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+      >
+        Create Account
+      </Button>
+    </form>
+  ) : (
+  
+     <form onSubmit={handleUserSubmit}>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="FirstName"
+        >
+          First Name:
+        </label>
+        <Input
+          type="text"
+          id="FirstName"
+          value={firstName}
+          onChange={(e) => SetfirstName(e.target.value)} // Fixed capitalization
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="LastName"
+        >
+          Last Name:
+        </label>
+        <Input
+          type="text"
+          id="LastName"
+          value={lastName}
+          onChange={(e) => SetlastName(e.target.value)} // Fixed capitalization
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="CName"
+        >
+          Company Name:
+        </label>
+        <Input
+          type="text"
+          id="CName"
+          value={CName}
+          onChange={(e) => SetCName(e.target.value)} // Fixed capitalization
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="password"
+        >
+          Password:
+        </label>
+        <Input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 dark:text-gray-300 font-bold mb-2"
+          htmlFor="confirmPassword"
+        >
+          Confirm Password:
+        </label>
+        <Input
+          type="password"
+          id="confirmPassword"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+        />
+      </div>
+
+      <Button
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
+      >
+        Create Account
+      </Button>
+    </form>
+  )
+)}
       </div>
     </div>
   );

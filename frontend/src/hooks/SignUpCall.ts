@@ -1,7 +1,7 @@
 import { Toast } from '@/components/toaster/toast';
 import axios from 'axios';
 
-const signUpCall = async (email: string, otp?: string, role?: string, password?: string, confirmPassword?: string, resendOtp?: boolean) => {
+const signUpCall = async ( email?: string, otp?: string, role?: string, password?: string, confirmPassword?: string, resendOtp?: boolean , firstName?:string , lastName?:string , CompanyName?:string) => {
   try {
     // Step 1: Send email to get OTP
     if (!otp && !role && !password) {
@@ -46,12 +46,18 @@ const signUpCall = async (email: string, otp?: string, role?: string, password?:
 
     // Step 4: Create User with Password
     if (otp && role && password && confirmPassword) {
+
+
+      console.log(CompanyName + " in signup call ")
       const response = await axios.post('http://localhost:3000/auth/signup', {
         step: 'createUser',
         email: email,
         password: password,
         confirmPassword: confirmPassword,
         role: role,
+        firstName:firstName,
+        lastName:lastName,
+        companyName :CompanyName
       });
       return response.data; // Return the data from the API (User created)
     }

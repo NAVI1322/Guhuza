@@ -18,9 +18,9 @@ const HeroSection = () => {
       </p>
 
       <div className="flex flex-col md:flex-row justify-center my-10 relative gap-5 md:gap-0">
-  <Button variant={"myButton"} aria-label="JOB_SEEKER">I am a JOB_SEEKER</Button>
+  <Button variant={"myButton"} aria-label="JOB_SEEKER">I am a Recruiter</Button>
   <Button variant={"myButton"} aria-label="Employer">I am an Employer</Button>
-  <Button variant={"myButton"} aria-label="STAFFING_FIRM">I am a STAFFING_FIRM</Button>
+ 
 </div>
    
 

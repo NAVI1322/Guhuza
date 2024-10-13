@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { sendOTPService, verifyOtpService, setRoleService, createUserService, loginService } from '../services/authService';
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
-  const { step, email, otp, role, password, confirmPassword } = req.body;
+  const { step, email, otp, role, password, confirmPassword ,firstName, lastName , companyName} = req.body;
 
   try {
     // Step 1: Send OTP to email
@@ -34,13 +34,17 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+
     // Step 5: Create User with Password
     if (step === 'createUser') {
+
       if (password !== confirmPassword) {
         res.status(400).json({ message: 'Passwords do not match' });
         return;
       }
-      const user = await createUserService(email, password, role);
+
+      console.log(companyName + " in auth controller"); 
+      const user = await createUserService(email, password, role,firstName,lastName,companyName);
       res.status(201).json({ message: 'User created successfully', user });
       return;
     }
