@@ -1,4 +1,4 @@
-// import { useRecoilValue } from "recoil";
+
 import Pro_NavBar from "./ProfileElements/NavBar";
 import Rightprofile from "./ProfileElements/Right_profile";
 import { Button } from "../ui/button";
@@ -6,12 +6,7 @@ import { Button } from "../ui/button";
 
 const ProfilePage = () => {
 
-
-    // const { firstName } = useRecoilValue(ProfileData);
-   
-   
-
-    return (
+ return (
         <div className="flex md:flex-row flex-col-reverse mx-auto w-[80%] mt-16">
             
             <div className="w-full md:w-[60%] py-5 ">

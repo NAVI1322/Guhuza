@@ -9,50 +9,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { UpdateEProfile } from "@/hooks/update_EProfile";
+import { useState } from "react";
 
-import { capitalizeFirstLetter } from "@/hooks/FirstLetterCapital";
 
 export function AboutModal() {
-  interface UserData {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
+ 
 
-  const id = localStorage.getItem('id');
-  const Domain = import.meta.env.VITE_DOMAIN;
-  const [data, setData] = useState("");
-//   const [FName, setFName] = useState(data.firstName);
-//   const [LName, setLName] = useState(data.lastName);
-//   const [Email,SetEmail] = useState(data.email);
-
-//   async function handleSavingProfile() {
-//     try {
-//       const res = await axios.put(`${Domain}/api/v1/blog/${id}`, {
-//         firstName: FName,
-//         lastName: LName,
-//       });
-
-//     //   setData((prevData) => ({
-//     //     ...prevData,
-//     //     firstName: capitalizeFirstLetter(res.data.user.firstName),
-//     //     lastName: capitalizeFirstLetter(res.data.user.lastName),
-//     //   }));
-//       alert("Profile updated successfully!"); // Success alert
-//     } catch (error) {
-//       console.error("Error updating profile:", error);
-//       alert("Failed to update profile."); // Error alert
-//     }
-//   }
-
-//   useEffect(() => {
-//     setFName(data.firstName);
-//     setLName(data.lastName);
-//     SetEmail(data.email)
-//   }, [data]);
-
+  const [firstName,SetfirstName] = useState("");
+  const [lastName,SetlastName] = useState("");
+  const [email,_]= useState("Navneet.Sharmaxdev@gmail.com")
+  
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -69,8 +36,8 @@ export function AboutModal() {
           <Input
             id="firstName"
             className="col-span-3"
-            value="FirstName"
-            // onChange={(e) => setFName(e.target.value)}
+            value={firstName}
+             onChange={(e) => SetfirstName(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -80,19 +47,19 @@ export function AboutModal() {
           <Input
             id="lastName"
             className="col-span-3"
-            value="lastName"
-            // onChange={(e) => setLName(e.target.value)}
+            value={lastName}
+             onChange={(e) => SetlastName(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
           </Label>
-          <Input id="email" value="Rksharma@gmail.com" className="col-span-3" readOnly />
+          <Input id="email" value="navneet.sharmaxdev@gmail.com" className="col-span-3" readOnly />
         </div>
       </div>
       <DialogFooter>
-        <Button type="button" onClick={()=>{console.log("HandleSave")}}>
+        <Button type="button" onClick={()=>{UpdateEProfile(firstName,lastName,email)}}>
           Save changes
         </Button>
       </DialogFooter>

@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 
-import axios from "axios"
+
+import { UpdateEProfile } from "@/hooks/update_EProfile"
+import { Toast } from "@/components/toaster/toast"
 
 
 
@@ -36,23 +38,15 @@ export function TextareaForm() {
     resolver: zodResolver(FormSchema),
   })
 
-  const Domain = import.meta.env.VITE_DOMAIN;
   async function onSubmit(data: z.infer<typeof FormSchema>) {
 
  try{
-    const id="5fd76463-536d-43a1-a2c8-f3b7854fe67f";
-
-     await axios.post(`${Domain}/api/v1/blog/PostAbout/${id}`,{
-     About:data.bio
-    })  
-    
+    await UpdateEProfile(undefined,undefined,"Navneet.Sharmaxdev@gmail.com",data.bio);
  } 
  catch(e)
  {
-  alert("Something Went Wrong");
+  Toast("Error","unable to Update About","Try Again")
  }
- 
-  
   }
   return (
     <Form {...form}>

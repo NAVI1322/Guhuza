@@ -1,15 +1,11 @@
 
 import { TextareaForm } from "./ProfileElements/TextArea";
 import Pro_NavBar from "./ProfileElements/NavBar";
-import LeftProfile from "./ProfileElements/Right_profile";
 import RightProfile from "./ProfileElements/Right_profile";
 
 
 
 const AboutProfile = () => {
-
-  
-
 
 
     return (
