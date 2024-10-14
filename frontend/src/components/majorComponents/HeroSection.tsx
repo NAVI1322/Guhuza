@@ -14,7 +14,7 @@ const HeroSection = () => {
         </span>
       </h1>
       <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-      Our advanced technology matches the JOB_SEEKERs profile with jobs on our site and ranks them for our employers based on skills required for the position. Once the match has been made, live interviews can be conducted immediately right through our platform!
+      Our advanced technology matches job seeker's profile with jobs on our site and ranks them for our employers based on skills required for the position. Once the match has been made, live interviews can be conducted immediately right through our platform!
       </p>
 
       <div className="flex flex-col md:flex-row justify-center my-10 relative gap-5 md:gap-0">

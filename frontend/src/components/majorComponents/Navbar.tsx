@@ -1,7 +1,6 @@
 import { Menu, X } from "lucide-react";
-import { useState,useEffect } from "react";
+import { useState} from "react";
 import darklogo from "../../assets/darklogo.png";
-import lightlogo from "../../assets/lightlogo.png";
 import { navItems } from "@/constants";
 import { ModeToggle } from "../theme/modeToggle";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +9,6 @@ import { Button } from "../ui/button";
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const router = useNavigate();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Detect dark mode based on a class or system preferences
-    setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }, []);
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
@@ -25,11 +18,13 @@ const Navbar = () => {
       <div className="container px-4 mx-auto relative lg:text-sm">
         <div className="flex justify-between items-center">
         <div className="flex items-center flex-shrink-0">
+          <div className="bg-white dark:bg-transparent">
       <img
-        className="h-6 w-20 mr-2"
-        src={isDarkMode ? darklogo : lightlogo}
+        className="h-6 w-20 mr-2 mix-blend-difference dark:mix-blend-normal"
+        src={darklogo}
         alt="Logo"
       />
+          </div>
     </div>
           {/* Desktop Navbar Links */}
           <ul className="hidden lg:flex space-x-8">
@@ -76,13 +71,13 @@ const Navbar = () => {
     <div className="flex flex-col space-y-4 mt-6 w-full">
       <button
         onClick={() => { router('/login') }}
-        className="py-2 text-center border border-neutral-300 dark:border-neutral-700 rounded-lg transition duration-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 w-full text-left px-4 text-neutral-900 dark:text-white"
+        className="py-2 text-center border border-neutral-300 dark:border-neutral-700 rounded-lg transition duration-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 w-full px-4 text-neutral-900 dark:text-white"
       >
         Sign In
       </button>
       <button
         onClick={() => { router('/signup') }}
-        className="py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800 w-full text-left transition duration-300 hover:opacity-90 px-4 text-center text-black dark:text-white"
+        className="py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-800 w-full transition duration-300 hover:opacity-90 px-4 text-center text-black dark:text-white"
       >
         Create an account
       </button>

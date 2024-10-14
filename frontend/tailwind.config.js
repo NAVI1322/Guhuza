@@ -7,6 +7,16 @@ export default {
   ],
   theme: {
   	extend: {
+		screens:{
+			sty:'720px',
+			ffty:'550px',
+			nhd:'900px',
+			tsn:'369px',
+			ehd:'1100px',
+			nst:'970px',
+			fhd:'500px',
+			thd:'300px'
+		},
 		animation: {
 			aurora: "aurora 60s linear infinite",
 		  },
@@ -105,5 +115,17 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+	function ({ addUtilities }) {
+		addUtilities({
+		  '.no-scrollbar': {
+			'-ms-overflow-style': 'none',  // For Internet Explorer and Edge
+			'scrollbar-width': 'none',     // For Firefox
+		  },
+		  '.no-scrollbar::-webkit-scrollbar': {
+			'display': 'none',  // For Chrome, Safari, and Opera
+		  },
+		});
+	  },
+  ],
 }

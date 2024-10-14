@@ -1,44 +1,6 @@
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/ui/marquee";
-
-const reviews = [
-  {
-    name: "Facebook",
-    username: "@facebook",
-    body: "Connecting people across the globe.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
-  },
-  {
-    name: "Apple",
-    username: "@apple",
-    body: "Innovating the future of technology.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-  },
-  {
-    name: "Amazon",
-    username: "@amazon",
-    body: "Delivering everything from A to Z.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-  },
-  {
-    name: "Netflix",
-    username: "@netflix",
-    body: "Bringing you the best entertainment.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-  },
-  {
-    name: "Google",
-    username: "@google",
-    body: "Organizing the world's information.",
-    img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-  },
-  {
-    name: "Tesla",
-    username: "@tesla",
-    body: "Accelerating the world's transition to sustainable energy.",
-    img: "https://www.svgrepo.com/show/306845/tesla.svg",
-  },
-];
+import { reviews } from "@/constants";
 
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);

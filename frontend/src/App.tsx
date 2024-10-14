@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import HomePage from './components/HomePage/HomePage'
 import Signup from './components/SignUp/Signup'
 import Login from './components/Login/Login'
 import Verify2FA from './components/Verify2FA/Verify2FA'
 import Dashboard from './components/Dashboard/Dashboard'
 import ProfilePage from './components/Profile/ProfilePage'
 import AboutProfile from './components/Profile/ProfileAbout'
+import HomePage from './components/Homepage/HomePage'
 
 function App() {
 
