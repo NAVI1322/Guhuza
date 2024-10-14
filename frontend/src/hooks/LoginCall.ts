@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const loginCall = async (email: string, password: string) => {
   console.log("Logging in with:", email); // Debug log
   try {
@@ -7,6 +8,7 @@ const loginCall = async (email: string, password: string) => {
       email: email,
       password: password,
     });
+        
     return response.data; // Return the response data
   } catch (error: any) {
     if (error.response) {

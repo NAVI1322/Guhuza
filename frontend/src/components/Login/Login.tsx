@@ -5,7 +5,7 @@ import FlickeringGrid from '../ui/flickering-grid'; // Import FlickeringGrid for
 import { Toast } from '../toaster/toast';
 
 const Login = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const router = useNavigate(); // Initialize useNavigate
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
@@ -14,10 +14,18 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-       await loginCall(email, password);
+      const response = await loginCall(email, password);
+
+      const role = response.role;
+
+
+    if(role!="RECRUITER")
+    router('/profile');
+    else 
+    router('/dashboard')
  
       Toast("Success","Login Successfully")
-      navigate("/dashboard");
+    
 
     } catch (err) {
       Toast("Failed","Email/Password is incorrect","Try again")

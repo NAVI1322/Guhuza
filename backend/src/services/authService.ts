@@ -1,5 +1,5 @@
 import { sendVerificationEmail } from '../utils/emailSender';
-import { PrismaClient, Prisma } from '@prisma/client'; // Combine imports for better readability
+import { PrismaClient, Prisma, Role } from '@prisma/client'; // Combine imports for better readability
 import bcrypt from 'bcrypt';
 import { create } from 'domain';
 
@@ -126,7 +126,7 @@ export const loginService = async (email: string, password: string) => {
     // Find the user by email
     const userExist = await prisma.user.findUnique({
       where: { email: email }, // Use the variable 'email'
-      select: { password: true }, // Fetch only the password
+      select: {  role: true , password:true}, 
     });
 
     
@@ -138,13 +138,13 @@ export const loginService = async (email: string, password: string) => {
     // Verify the password
     const isPasswordValid = await bcrypt.compare(password, userExist.password);
     if (!isPasswordValid) {
-      return { success: false, message: 'Invalid password' };
+      return { success: false, message: 'Invalid password'  };
     }
 
  
 
     // If user exists and password is correct
-    return { success: true, message: 'Login successful' };
+    return { success: true, message: 'Login successful',Role: userExist.role  };
   } catch (error) {
     console.error('Login Error:', error);
     return { success: false, message: 'An error occurred during login' };

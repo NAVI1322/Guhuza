@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Loader } from "../loading /loader";
+
 
 import { Toast } from "../toaster/toast";
 
@@ -127,16 +127,14 @@ const Signup = () => {
                 className="w-full border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
               />
             </div>
-            {loading ? (
-              <Loader />
-            ) : (
+            
               <Button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-6 rounded-md"
               >
                 Send OTP
               </Button>
-            )}
+            
             <div className="text-center text-sm">
               Already have an Account
               <Link
