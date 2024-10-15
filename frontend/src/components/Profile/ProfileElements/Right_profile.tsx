@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { AboutModal } from "./Modal_editProfile";
 import { Button } from "@/components/ui/button";  
-import { capitalizeFirstLetter } from "@/hooks/FirstLetterCapital";
 
 
 const RightProfile = () => {
-  const [data, setData] = useState("");
+  const [, setData] = useState("");
  
   const Domain = import.meta.env.VITE_DOMAIN; 
 

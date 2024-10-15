@@ -6,7 +6,7 @@ import Verify2FA from './components/Verify2FA/Verify2FA'
 import Dashboard from './components/Dashboard/Dashboard'
 import ProfilePage from './components/Profile/ProfilePage'
 import AboutProfile from './components/Profile/ProfileAbout'
-import HomePage from './components/Homepage/HomePage'
+import HomePage from './components/Homepage/Homepage'
 
 function App() {
 
