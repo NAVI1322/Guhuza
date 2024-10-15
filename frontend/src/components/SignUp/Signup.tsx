@@ -26,7 +26,6 @@ const Signup = () => {
   const [firstName,SetfirstName] = useState("");
   const [lastName,SetlastName] = useState("");
   const [CName,SetCName] = useState("");
-  const [loading, SetLoading] = useState(false);
   
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
