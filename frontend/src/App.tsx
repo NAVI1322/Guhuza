@@ -14,8 +14,7 @@ function App() {
   return (
     <>
       <Routes>
-      <Route path="/" element={<Navigate to="/HomePage" />} />
-        <Route path='/HomePage' element={<HomePage></HomePage>}></Route>
+      <Route path="/" element={<HomePage></HomePage>} />
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path="/verify-2fa" element={<Verify2FA />} />
