@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 
 import { UpdateEProfile } from "@/hooks/update_EProfile"
-import { Toast } from "@/components/toaster/toast"
+import { Toast } from "@/components/majorComponents/toast"
 
 
 

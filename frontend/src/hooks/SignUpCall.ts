@@ -1,4 +1,4 @@
-import { Toast } from '@/components/toaster/toast';
+import { Toast } from '@/components/majorComponents/toast';
 import axios from 'axios';
 
 const signUpCall = async ( email?: string, otp?: string, role?: string, password?: string, confirmPassword?: string, resendOtp?: boolean , firstName?:string , lastName?:string , CompanyName?:string) => {

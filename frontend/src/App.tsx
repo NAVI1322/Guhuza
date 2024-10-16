@@ -1,12 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Signup from './components/SignUp/Signup'
-import Login from './components/Login/Login'
-import Verify2FA from './components/Verify2FA/Verify2FA'
-import Dashboard from './components/Dashboard/Dashboard'
-import ProfilePage from './components/Profile/ProfilePage'
-import AboutProfile from './components/Profile/ProfileAbout'
-import HomePage from './components/Homepage/Homepage'
+import Signup from './pages/SignUp/Signup'
+import Login from './pages/Login/Login'
+import Dashboard from './pages/Dashboard/Dashboard'
+import ProfilePage from './pages/Profile/ProfilePage'
+import AboutProfile from './pages/Profile/ProfileAbout'
+import HomePage from './pages/Homepage/Homepage'
 
 function App() {
 
@@ -17,7 +16,6 @@ function App() {
       <Route path="/" element={<HomePage></HomePage>} />
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
-        <Route path="/verify-2fa" element={<Verify2FA />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/About" element={<AboutProfile/>} />

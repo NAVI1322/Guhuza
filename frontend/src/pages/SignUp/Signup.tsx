@@ -1,9 +1,9 @@
 import signUpCall from "@/hooks/SignUpCall";
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import FlickeringGrid from "../ui/flickering-grid";
+import FlickeringGrid from "../../components/ui/flickering-grid";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 
 
-import { Toast } from "../toaster/toast";
+import { Toast } from "../../components/majorComponents/toast";
 
 const Signup = () => {
   const navigate = useNavigate();

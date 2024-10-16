@@ -1,7 +1,7 @@
 
 import Pro_NavBar from "./ProfileElements/NavBar";
 import Rightprofile from "./ProfileElements/Right_profile";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 
 
 const ProfilePage = () => {

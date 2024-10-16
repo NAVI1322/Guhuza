@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 import { loginCall } from '@/hooks/LoginCall'; // Ensure this path is correct
-import FlickeringGrid from '../ui/flickering-grid'; // Import FlickeringGrid for background
-import { Toast } from '../toaster/toast';
+import FlickeringGrid from '../../components/ui/flickering-grid'; // Import FlickeringGrid for background
+import { Toast } from '../../components/majorComponents/toast';
 
 const Login = () => {
   const router = useNavigate(); // Initialize useNavigate

@@ -1,6 +1,6 @@
 // UI Components
 import { Timeline } from '../../components/ui/timeline';
-import CarouselSize from '../../components/Carousel';
+import CarouselSize from '../../components/majorComponents/Carousel';
 import Navbar from '../../components/majorComponents/Navbar';
 import Footer from '../../components/majorComponents/Footer';
 

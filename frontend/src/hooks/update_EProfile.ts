@@ -1,4 +1,4 @@
-import { Toast } from "@/components/toaster/toast";
+import { Toast } from "@/components/majorComponents/toast";
 import axios from "axios";
 
 export async function UpdateEProfile(firstName?: string, lastName?: string,  email?: string ,about?: string) {
