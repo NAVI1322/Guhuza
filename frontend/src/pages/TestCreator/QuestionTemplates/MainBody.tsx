@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import { Toast } from "@/components/majorComponents/toast";
+import CreateTest from "@/hooks/CreateTest";
 
-const MainBody = () => {
+const TestStructure = () => {
     interface Question {
         id: string;
         type: string;
@@ -15,7 +15,7 @@ const MainBody = () => {
     }
 
     const [questions, setQuestions] = useState<Question[]>([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
     const [showQuestionTypeSelection, setShowQuestionTypeSelection] = useState<boolean>(false);
 
     const addQuestion = (type: string) => {
@@ -27,20 +27,16 @@ const MainBody = () => {
             options: type === "MCQ" ? [""] : [],
             correctAnswers: type === "Fill Up" ? [""] : [],
         };
-        const updatedQuestions = [...questions, newQuestion];
-        setQuestions(updatedQuestions);
-        setCurrentQuestionIndex(updatedQuestions.length - 1);
+        setQuestions([...questions, newQuestion]);
+        setCurrentQuestionIndex(questions.length);
         setShowQuestionTypeSelection(false);
     };
 
     const removeQuestion = (id: string) => {
         const updatedQuestions = questions.filter(question => question.id !== id);
         setQuestions(updatedQuestions);
-
-        // Update currentQuestionIndex
-        if (currentQuestionIndex !== null) {
-            const newIndex = updatedQuestions.length === 0 ? null : Math.min(currentQuestionIndex, updatedQuestions.length - 1);
-            setCurrentQuestionIndex(newIndex);
+        if (currentQuestionIndex >= updatedQuestions.length) {
+            setCurrentQuestionIndex(updatedQuestions.length - 1);
         }
     };
 
@@ -51,7 +47,7 @@ const MainBody = () => {
     };
 
     const handleQuestionContentChange = (content: string) => {
-        if (currentQuestionIndex !== null) {
+        if (questions[currentQuestionIndex]) {
             const updatedQuestions = [...questions];
             updatedQuestions[currentQuestionIndex].content = content;
             setQuestions(updatedQuestions);
@@ -59,7 +55,7 @@ const MainBody = () => {
     };
 
     const handleOptionChange = (optionIndex: number, value: string) => {
-        if (currentQuestionIndex !== null && questions[currentQuestionIndex].options) {
+        if (questions[currentQuestionIndex]?.options) {
             const updatedQuestions = [...questions];
             updatedQuestions[currentQuestionIndex].options![optionIndex] = value;
             setQuestions(updatedQuestions);
@@ -67,7 +63,7 @@ const MainBody = () => {
     };
 
     const addOption = () => {
-        if (currentQuestionIndex !== null) {
+        if (questions[currentQuestionIndex]) {
             const updatedQuestions = [...questions];
             updatedQuestions[currentQuestionIndex].options?.push("");
             setQuestions(updatedQuestions);
@@ -75,7 +71,7 @@ const MainBody = () => {
     };
 
     const removeOption = (optionIndex: number) => {
-        if (currentQuestionIndex !== null && questions[currentQuestionIndex].options) {
+        if (questions[currentQuestionIndex]?.options) {
             const updatedQuestions = [...questions];
             updatedQuestions[currentQuestionIndex].options?.splice(optionIndex, 1);
             setQuestions(updatedQuestions);
@@ -83,7 +79,7 @@ const MainBody = () => {
     };
 
     const handleCorrectAnswerChange = (answerIndex: number, value: string) => {
-        if (currentQuestionIndex !== null) {
+        if (questions[currentQuestionIndex]) {
             const updatedQuestions = [...questions];
             if (!updatedQuestions[currentQuestionIndex].correctAnswers) {
                 updatedQuestions[currentQuestionIndex].correctAnswers = [];
@@ -93,97 +89,92 @@ const MainBody = () => {
         }
     };
 
+    
+
     const nextQuestion = () => {
-        if (currentQuestionIndex !== null) {
-            if (currentQuestionIndex === questions.length - 1) {
-                setCurrentQuestionIndex(null);
-                setShowQuestionTypeSelection(true);
-            } else {
-                setCurrentQuestionIndex(currentQuestionIndex + 1);
-            }
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
     };
 
     const goToPreviousQuestion = () => {
-        if (currentQuestionIndex !== null && currentQuestionIndex > 0) {
+        if (currentQuestionIndex > 0) {
             setCurrentQuestionIndex(currentQuestionIndex - 1);
         }
     };
 
-    const renderQuestion = (type: string, questionNumber: number) => {
+    const renderQuestion = (type: string) => {
+        const question = questions[currentQuestionIndex];
+
+        if (showQuestionTypeSelection) return;
         switch (type) {
             case "MCQ":
                 return (
-                    <div className="self-start m-auto p-4 border rounded-lg shadow-lg">
-                        <div className="text-2xl mb-6">Question {questionNumber}</div>
+                    <div className="question-container mb-4 p-4 border rounded-md shadow-sm">
+                        <div className="font-semibold mb-5">Question {currentQuestionIndex + 1}</div>
                         <textarea
-                            className="border p-2 w-full mb-4 rounded-md"
+                            className="border p-2 w-full mb-4 rounded-md bg-transparent resize-none"
                             placeholder="Enter your question here..."
-                            value={questions[currentQuestionIndex!].content}
+                            value={question.content}
                             onChange={(e) => handleQuestionContentChange(e.target.value)}
                         />
-                        <div className="mb-2">Options:</div>
-                        {questions[currentQuestionIndex!].options?.map((option, optionIndex) => (
-                            <div key={optionIndex} className="flex items-center space-x-2 mb-2">
+                        <div className="text-lg font-medium mb-2">Options:</div>
+                        {question.options?.map((option, optionIndex) => (
+                            <div key={optionIndex} className="flex items-center mb-2">
                                 <Checkbox
-                                    checked={questions[currentQuestionIndex!].correctAnswers?.includes(optionIndex.toString())}
+                                    checked={question.correctAnswers?.includes(optionIndex.toString())}
                                     onCheckedChange={(checked) => handleCorrectAnswerChange(optionIndex, checked ? optionIndex.toString() : "")}
                                 />
                                 <input
                                     type="text"
-                                    className="border p-2 w-full rounded-md"
+                                    className="border p-1 ml-2 flex-grow rounded-md bg-transparent outline-0"
                                     placeholder={`Option ${optionIndex + 1}`}
                                     value={option}
                                     onChange={(e) => handleOptionChange(optionIndex, e.target.value)}
                                 />
-                                <Button onClick={() => removeOption(optionIndex)}>Remove</Button>
+                                <Button onClick={() => removeOption(optionIndex)} variant={"destructive"} className="ml-2 ">Remove</Button>
                             </div>
                         ))}
-                        <Button onClick={addOption} className="mt-2">Add Option</Button>
+                        <Button onClick={addOption} variant={"myButton"} className="mt-2">Add Option</Button>
                     </div>
                 );
             case "Fill Up":
                 return (
-                    <div className="self-start m-auto p-4 border rounded-lg shadow-lg">
-                        <div className="text-2xl mb-6">Question {questionNumber}</div>
+                    <div className="question-container mb-4 p-4 border rounded-md shadow-sm">
+                        <div className="font-semibold mb-5">Question {currentQuestionIndex + 1}</div>
                         <textarea
-                            className="border p-2 w-full mb-4 rounded-md"
+                            className="border p-2 w-full mb-4 rounded-md bg-transparent resize-none"
                             placeholder="Enter your question here..."
-                            value={questions[currentQuestionIndex!].content}
+                            value={question.content}
                             onChange={(e) => handleQuestionContentChange(e.target.value)}
                         />
-                        <div className="mb-2">Correct Answer:</div>
                         <input
                             type="text"
-                            className="border p-2 w-full rounded-md"
-                            placeholder="Type the correct answer here..."
-                            value={questions[currentQuestionIndex!].correctAnswers?.[0] || ""}
+                            className="border p-1 w-full rounded-md bg-transparent outline-0"
+                            placeholder="Correct Answer"
+                            value={question.correctAnswers?.[0] || ""}
                             onChange={(e) => handleCorrectAnswerChange(0, e.target.value)}
                         />
                     </div>
                 );
             case "True/False":
                 return (
-                    <div className="self-start m-auto p-4 border rounded-lg shadow-lg">
-                        <div className="text-2xl mb-6">Question {questionNumber}</div>
+                    <div className="question-container mb-4 p-4 border rounded-md shadow-sm">
+                        <div className="font-semibold mb-5">Question {currentQuestionIndex + 1}</div>
                         <textarea
-                            className="border p-2 w-full mb-4 rounded-md"
+                            className="border p-2 w-full mb-4 rounded-md bg-transparent resize-none"
                             placeholder="Enter your question here..."
-                            value={questions[currentQuestionIndex!].content}
+                            value={question.content}
                             onChange={(e) => handleQuestionContentChange(e.target.value)}
                         />
-                        <div className="mb-2">Correct Answer:</div>
                         <RadioGroup
-                            defaultValue={questions[currentQuestionIndex!].correctAnswers?.[0] as string || "true"}
                             onValueChange={(value) => handleCorrectAnswerChange(0, value)}
                         >
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="true" id="true" />
-                                <label htmlFor="true">True</label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="false" id="false" />
-                                <label htmlFor="false">False</label>
+                            <div className="flex items-center">
+                                <RadioGroupItem value="true"  id="true" />
+                                <label htmlFor="true" className="ml-2">True</label>
+                                <RadioGroupItem value="false" id="false" className="ml-4" />
+                                <label htmlFor="false" className="ml-2">False</label>
                             </div>
                         </RadioGroup>
                     </div>
@@ -193,44 +184,52 @@ const MainBody = () => {
         }
     };
 
+    const finishTest = async () => {
+    await CreateTest("software developer",questions)
+
+    };
+
     return (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex flex-col md:flex-row h-screen overflow-hidden">
             {/* Sidebar */}
-            <div className="w-1/4 p-4 border-r">
-                <h2 className="text-lg font-semibold mb-4">Question Tally</h2>
-                <div className="space-y-2">
+            <div className="md:w-1/4 w-full p-4 border-r">
+                <h2 className="text-lg font-semibold mb-4">Question List</h2>
+                <div>
                     {questions.map((question, index) => (
-                        <div key={question.id} className="flex justify-between items-center p-2 border rounded-md cursor-pointer" onClick={() => setCurrentQuestionIndex(index)}>
+                        <div key={question.id} className="flex justify-between items-center mb-2">
                             <span>Question {index + 1}</span>
-                            <Button onClick={() => removeQuestion(question.id)} className="text-red-600">Remove</Button>
+                            <Button onClick={() => removeQuestion(question.id)} variant={"destructive"}>Remove</Button>
                         </div>
                     ))}
                 </div>
-                <Button variant={"myButton"} onClick={() => setShowQuestionTypeSelection(true)} className="mt-4 w-full">Add Question</Button>
+                <Button onClick={() => setShowQuestionTypeSelection(true)} className="mt-4 w-full myButton" variant={"myButton"}>Add Question</Button>
             </div>
 
             {/* Main Content */}
-            <div className="w-3/4 h-full p-4">
+            <div className="md:w-3/4 w-full p-4">
                 {showQuestionTypeSelection && (
                     <div className="p-4 border rounded-lg shadow-lg mb-4">
-                        <div>Choose a question type:</div>
-                        <div className="flex gap-4 mt-2">
-                            <Button variant={"myButton"} onClick={() => addQuestion("MCQ")}>MCQ</Button>
-                            <Button variant={"myButton"} onClick={() => addQuestion("Fill Up")}>Fill Up</Button>
-                            <Button variant={"myButton"} onClick={() => addQuestion("True/False")}>True/False</Button>
+                        <div className="font-semibold mb-5">Choose a question type :</div>
+                        <div className="flex gap-4 mt-2 justify-center space-x-2">
+                            <Button onClick={() => addQuestion("MCQ")} variant={"myButton"}>MCQ</Button>
+                            <Button onClick={() => addQuestion("Fill Up")} variant={"myButton"}>Fill Up</Button>
+                            <Button onClick={() => addQuestion("True/False")} variant={"myButton"}>True/False</Button>
                         </div>
                     </div>
                 )}
 
-                {currentQuestionIndex !== null && questions.length > 0 && renderQuestion(questions[currentQuestionIndex].type, currentQuestionIndex + 1)}
+                {questions.length > 0 && renderQuestion(questions[currentQuestionIndex].type)}
 
-                <div className="mt-4">
-                    <Button onClick={goToPreviousQuestion} disabled={currentQuestionIndex === null || currentQuestionIndex === 0} className="mr-2">Previous</Button>
-                    <Button onClick={nextQuestion} disabled={currentQuestionIndex === null || currentQuestionIndex === questions.length - 1}>Next</Button>
+                <div className="mt-4 flex flex-col md:flex-row justify-between">
+                    <Button onClick={goToPreviousQuestion} disabled={currentQuestionIndex === 0} variant={"outline"}>Previous</Button>
+                    <Button onClick={nextQuestion} disabled={currentQuestionIndex === questions.length - 1} variant={"outline"}>Next</Button>   
                 </div>
+                <div className="mt-4 flex flex-col md:flex-row justify-between">
+                <Button onClick={finishTest} className="mt-4 md:mt-0 w-full" variant={"myButton"}>Finish Test</Button>  </div>
+             
             </div>
         </div>
     );
 };
 
-export default MainBody;
+export default TestStructure;

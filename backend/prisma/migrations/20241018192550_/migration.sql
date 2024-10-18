@@ -1,24 +1,20 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('JOB_SEEKER', 'RECRUITER');
 
-  - The values [STAFFING_FIRM] on the enum `Role` will be removed. If these variants are still used in the database, this will fail.
-
-*/
 -- CreateEnum
 CREATE TYPE "ApplicationStatus" AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED', 'ARCHIVED');
 
--- AlterEnum
-BEGIN;
-CREATE TYPE "Role_new" AS ENUM ('JOB_SEEKER', 'RECRUITER');
-ALTER TABLE "User" ALTER COLUMN "role" TYPE "Role_new" USING ("role"::text::"Role_new");
-ALTER TYPE "Role" RENAME TO "Role_old";
-ALTER TYPE "Role_new" RENAME TO "Role";
-DROP TYPE "Role_old";
-COMMIT;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" "Role" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "updatedAt" TIMESTAMP(3);
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Employee" (
@@ -26,7 +22,7 @@ CREATE TABLE "Employee" (
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "about" TEXT NOT NULL,
+    "about" TEXT,
     "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
@@ -38,11 +34,39 @@ CREATE TABLE "Employee" (
 CREATE TABLE "Recruiter" (
     "id" TEXT NOT NULL,
     "companyName" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
 
     CONSTRAINT "Recruiter_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AvailableJob" (
+    "id" TEXT NOT NULL,
+    "recruiterId" TEXT,
+    "jobName" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+
+    CONSTRAINT "AvailableJob_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Question" (
+    "id" TEXT NOT NULL,
+    "jobId" TEXT,
+    "type" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "options" TEXT[],
+    "correctAnswers" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -82,6 +106,9 @@ CREATE TABLE "E_Archive" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Employee_email_key" ON "Employee"("email");
 
 -- CreateIndex
@@ -95,6 +122,12 @@ ALTER TABLE "Employee" ADD CONSTRAINT "Employee_userId_fkey" FOREIGN KEY ("userI
 
 -- AddForeignKey
 ALTER TABLE "Recruiter" ADD CONSTRAINT "Recruiter_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AvailableJob" ADD CONSTRAINT "AvailableJob_recruiterId_fkey" FOREIGN KEY ("recruiterId") REFERENCES "Recruiter"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Question" ADD CONSTRAINT "Question_jobId_fkey" FOREIGN KEY ("jobId") REFERENCES "AvailableJob"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Application" ADD CONSTRAINT "Application_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "Employee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

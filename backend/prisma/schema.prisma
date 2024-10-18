@@ -43,8 +43,29 @@ model Recruiter {
   user        User    @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime?  @updatedAt
-
+  AvaiableJobs AvailableJob[]
   Application Application[]
+}
+model AvailableJob {
+    id          String      @id @default(uuid())
+    recruiterId String?     
+    recruiter   Recruiter?  @relation(fields: [recruiterId], references: [id])
+    jobName     String
+    questions   Question[]  @relation("JobQuestions")
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime?   @updatedAt
+}
+
+model Question {
+    id            String       @id @default(uuid())
+    jobId         String?
+    availableJob  AvailableJob? @relation("JobQuestions", fields: [jobId], references: [id])
+    type          String
+    content       String
+    options       String[]     // Store options as an array of strings
+    correctAnswers String[]   
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime?   @updatedAt  // Store correct answers as an array of strings
 }
 
 model Application {
@@ -69,6 +90,8 @@ model E_History {
   endDate     DateTime?
   description String
 }
+
+
 
 model E_Archive {
   id          String   @id @default(uuid())
