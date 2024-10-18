@@ -17,7 +17,7 @@ const HeroSection = () => {
       Our advanced technology matches job seeker's profile with jobs on our site and ranks them for our employers based on skills required for the position. Once the match has been made, live interviews can be conducted immediately right through our platform!
       </p>
 
-      <div className="flex flex-col md:flex-row justify-center my-10 relative gap-5 md:gap-0">
+      <div className="flex flex-col md:flex-row justify-center my-10 relative gap-5 md:gap-4 items-center">
   <Button variant={"myButton"} aria-label="JOB_SEEKER">I am a Recruiter</Button>
   <Button variant={"myButton"} aria-label="Employer">I am an Employer</Button>
  

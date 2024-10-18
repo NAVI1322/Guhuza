@@ -71,7 +71,7 @@ const recommendedTopics = [
 const RecommendedTopics: React.FC = () => (
   <div className="mb-5">
     <div className="mb-3">Recommended Topics</div>
-    <div className="flex flex-wrap items-center gap-x-0 gap-y-4 mb-5 overflow-hidden">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-4 mb-5 overflow-hidden">
       {recommendedTopics.map((topic, index) => (
         <Button key={index} variant={"myButton"} className="text-xs">{topic}</Button>
       ))}

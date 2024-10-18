@@ -1,19 +1,19 @@
 import { Gamepad, Star, UserCheck, Users, Award, Lock } from "lucide-react";
 import { BorderBeamDemo } from "@/components/majorComponents/BorderBeam";
 
-import user1 from "../assets/profile-pictures/user1.jpg";
-import user2 from "../assets/profile-pictures/user2.jpg";
-import user3 from "../assets/profile-pictures/user3.jpg";
-import user4 from "../assets/profile-pictures/user4.jpg";
-import user5 from "../assets/profile-pictures/user5.jpg";
-import user6 from "../assets/profile-pictures/user6.jpg";
-import illustration1 from "../assets/timeline-illustrations/1.jpeg";
-import illustration2 from "../assets/timeline-illustrations/2.jpeg";
-import illustration3 from "../assets/timeline-illustrations/3.jpeg";
-import illustration4 from "../assets/timeline-illustrations/4.jpeg";
-import illustration5 from "../assets/timeline-illustrations/5.jpeg";
-import illustration6 from "../assets/timeline-illustrations/6.jpeg";
-import illustration7 from "../assets/timeline-illustrations/6.jpeg";
+import user1 from "../assets/images/profile-pictures/user1.jpg";
+import user2 from "../assets/images/profile-pictures/user2.jpg";
+import user3 from "../assets/images/profile-pictures/user3.jpg";
+import user4 from "../assets/images/profile-pictures/user4.jpg";
+import user5 from "../assets/images/profile-pictures/user5.jpg";
+import user6 from "../assets/images/profile-pictures/user6.jpg";
+import illustration1 from "../assets/images/timeline-illustrations/1.jpeg";
+import illustration2 from "../assets/images/timeline-illustrations/2.jpeg";
+import illustration3 from "../assets/images/timeline-illustrations/3.jpeg";
+import illustration4 from "../assets/images/timeline-illustrations/4.jpeg";
+import illustration5 from "../assets/images/timeline-illustrations/5.jpeg";
+import illustration6 from "../assets/images/timeline-illustrations/6.jpeg";
+import illustration7 from "../assets/images/timeline-illustrations/6.jpeg";
 export const projects = [
   {
     title: "Live Interviews",

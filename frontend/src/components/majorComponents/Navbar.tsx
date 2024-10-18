@@ -1,6 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState} from "react";
-import darklogo from "../../assets/darklogo.png";
+import darklogo from "../../assets/images/logos/darklogo.png";
 import { navItems } from "@/constants";
 import { ModeToggle } from "../theme/modeToggle";
 import { useNavigate } from "react-router-dom";

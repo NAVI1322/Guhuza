@@ -7,19 +7,23 @@ export default {
   ],
   theme: {
   	extend: {
-		screens:{
-			sty:'720px',
-			ffty:'550px',
-			nhd:'900px',
-			tsn:'369px',
-			ehd:'1100px',
-			nst:'970px',
-			fhd:'500px',
-			thd:'300px'
-		},
-		animation: {
-			aurora: "aurora 60s linear infinite",
-		  },
+  		screens: {
+  			sty: '720px',
+  			ffty: '550px',
+  			nhd: '900px',
+  			tsn: '369px',
+  			ehd: '1100px',
+  			nst: '970px',
+  			fhd: '500px',
+  			thd: '300px'
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			marquee: 'marquee var(--duration) infinite linear',
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+  			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear'
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -105,13 +109,6 @@ export default {
   					'offset-distance': '100%'
   				}
   			}
-  		},
-  		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out',
-  			marquee: 'marquee var(--duration) infinite linear',
-  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
-  			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear'
   		}
   	}
   },
