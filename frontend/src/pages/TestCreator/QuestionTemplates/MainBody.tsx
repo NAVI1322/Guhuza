@@ -19,6 +19,22 @@ interface MainBodyProps {
     };
 }
 
+
+
+interface MainBodyProps {
+    formdata?: {
+        jobName: string;
+        skills: string;
+        description: string;
+        location: string;
+        benefits: string;
+        ourValues: string;
+        whyWorkWithUs: string;
+        positionSummary: string;
+        positionResponsibilities: string;
+    };
+}
+
 const TestStructure = (formdata:MainBodyProps) => {
     interface Question {
         id: string;
@@ -97,16 +113,24 @@ const TestStructure = (formdata:MainBodyProps) => {
     };
 
     const handleCorrectAnswerChange = (answerIndex: number, value: string) => {
+        // Check if there is a current question available
         if (questions[currentQuestionIndex]) {
+            // Create a shallow copy of the questions array to avoid direct mutation
             const updatedQuestions = [...questions];
+            
+            // Initialize the correctAnswers property if it doesn't exist
             if (!updatedQuestions[currentQuestionIndex].correctAnswers) {
                 updatedQuestions[currentQuestionIndex].correctAnswers = [];
             }
+            
+            // Update the specific correct answer at the given answerIndex with the new value
             updatedQuestions[currentQuestionIndex].correctAnswers[answerIndex] = value;
+            
+            // Update the state of questions to trigger a re-render with the new data
             setQuestions(updatedQuestions);
         }
     };
-
+    
     
 
     const nextQuestion = () => {
@@ -204,6 +228,7 @@ const TestStructure = (formdata:MainBodyProps) => {
 
     const finishTest = async () => {
         console.log(formdata)
+        console.log(JSON.stringify(questions,null,2))
     // await CreateTest(formdata,questions)
 
     };

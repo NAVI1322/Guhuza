@@ -6,11 +6,10 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import ProfilePage from './pages/Profile/ProfilePage'
 import HomePage from './pages/Homepage/Homepage'
 import TestCreator from './pages/TestCreator/TestCreator'
-import TestCreator2 from './pages/TestCreator2/TestCreator2'
 import TestStructure from './pages/TestStructure/TestStructure'
 import Test from './pages/Test/Test'
-import JobDes from './pages/TestCreator/JobDesc'
-
+import Recruiter from './pages/Recruiter/Recruiter'
+import Applications from './pages/Applications/Applications'
 
 function App() {
 
@@ -23,12 +22,9 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/testcreator" element={<TestCreator />} />
-        <Route path="/t2" element={<TestCreator2 />} />
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/teststructure" element={<TestStructure/>} />
         <Route path="/test" element={<Test/>} />
-        <Route path="/JobDescription" element={<JobDes/>} />
-
       </Routes>
     </>
   )

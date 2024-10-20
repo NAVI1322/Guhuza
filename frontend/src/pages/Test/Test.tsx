@@ -1,128 +1,247 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
-// Define an interface for the structure of a question
-interface Question {
-  id: string; // Unique identifier for the question
-  type: string; // Type of question (MCQ, True/False, Fill Up)
-  time: number; // Time allocated for answering the question
-  content: string; // The question text
-  options: string[]; // Options for MCQ or True/False questions
-  correctAnswers: string[]; // Correct answers, represented as '1' (true) or '0' (false)
-}
 
-// Array of questions conforming to the Question interface
-const questions: Question[] = [
+const questions = [
   {
-    id: '23f26e1b76c6adaed41ae927e4c7069a',
-    type: 'MCQ',
-    time: 10,
-    content: 'Are you gay?',
-    options: ['Yes', 'Ohh yess', '1st option', 'Again yes'],
-    correctAnswers: ['0', '1', '0', '0'], // '1' indicates the second option is correct
+    id: "4b870978428b84cc866cecc54acfb077",
+    type: "MCQ",
+    time: 30,
+    content: "What is the capital of France?",
+    options: [
+      "France",
+      "Paris",
+      "London",
+      "Something else"
+    ],
+    correctAnswers: [
+      "0", // Correct option is Paris
+      "1", // Correct option is Paris
+    ]
   },
   {
-    id: 'a02c2a2ec8fc86e16574c8ff2bc149b0',
-    type: 'True/False',
-    time: 10,
-    content: 'Seriously, you are gay?',
-    options: ['Yes','No'],
-    correctAnswers: ['1','0'], // '1' indicates the first option is correct
+    id: "4b870978428b84cc866cecc54acfb077",
+    type: "MCQ",
+    time: 30,
+    content: "What is the capital of France?",
+    options: [
+      "France",
+      "Paris",
+      "London",
+      "Something else"
+    ],
+    correctAnswers: [
+      "0", // Correct option is Paris
+      "3", // Correct option is Paris
+    ]
   },
   {
-    id: '4bbbf831bc0dae37e720f3fb95819d21',
-    type: 'Fill Up',
-    time: 10,
-    content: 'When did you feel you are gay?',
-    options: [], // No options for fill-up questions
-    correctAnswers: ['from birth'], // Correct answer for fill-up
+    id: "3b870978428b84cc866cecc54acfb077",
+    type: "MCQ",
+    time: 30,
+    content: "What is the capital of Germany?",
+    options: [
+      "France",
+      "Berlin",
+      "London",
+      "Something else"
+    ],
+    correctAnswers: [
+      "1", // Correct option is Berlin
+    ]
   },
+  {
+    id: "a873cd0bd3d9f7369bcd88c6aa39e495",
+    type: "Fill Up",
+    time: 30,
+    content: "East or west?",
+    options: [],
+    correctAnswers: [
+      "west"
+    ]
+  },
+  {
+    id: "44f64ecb3b93efc4105edaea5c9effc8",
+    type: "True/False",
+    time: 30,
+    content: "Why is the sky blue?",
+    options: [],
+    correctAnswers: [
+      "true"
+    ]
+  }
 ];
 
-// Functional component representing the quiz
-const   Test: React.FC = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Tracks the index of the current question
-  const [timeLeft, setTimeLeft] = useState(questions[0].time); // Time left for the current question
-  const [correctCount, setCorrectCount] = useState(0); // Count of correct answers given by the user
-  const [_, setUserAnswers] = useState<string[]>([]); // Array to store user's answers
+const Test = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<string[]>([]);
+  const [score, setScore] = useState<number | null>(null);
+  const [isTestStarted, setIsTestStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
-  // Effect hook to manage the timer for each question
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer); // Stop the timer when it reaches 0
-          handleNextQuestion(); // Move to the next question when time's up
-          return 0; // Set time left to 0
-        }
-        return prev - 1; // Decrease time left by 1 second
-      });
-    }, 1000); // Timer interval set to 1 second
+    let timer: NodeJS.Timeout;
 
-    // Cleanup function to clear the timer when the component unmounts or updates
-    return () => clearInterval(timer);
-  }, [currentQuestionIndex]); // Re-run effect when the current question index changes
-
-  // Function to handle the answer submitted by the user
-  const handleAnswer = (answer: string) => {
-    setUserAnswers((prev) => [...prev, answer]); // Add the user's answer to the answers array
-    // Check if the answer is correct
-    if (questions[currentQuestionIndex].correctAnswers[parseInt(answer)] === '1') {
-      setCorrectCount((prev) => prev + 1); // Increment correct count if the answer is correct
+    if (isTestStarted && timeLeft !== null && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => (prev! - 1));
+      }, 1000);
+    } else if (timeLeft === 0) {
+      handleNextQuestion();
     }
-    handleNextQuestion(); // Move to the next question
+
+    return () => clearInterval(timer);
+  }, [isTestStarted, timeLeft]);
+
+  const startTest = () => {
+    setIsTestStarted(true);
+    setTimeLeft(questions[currentQuestionIndex].time);
   };
 
-  // Function to move to the next question or show results if it's the last question
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1); // Increment question index to show the next question
-      setTimeLeft(questions[currentQuestionIndex + 1].time); // Reset the time left for the next question
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      setTimeLeft(questions[nextIndex].time);
     } else {
-      // Show results
-      console.log(questions)
-      alert(`Quiz Finished! Correct Answers: ${correctCount} / ${questions.length}`); // Display the result
+      calculateScore();
     }
   };
 
+  const handleAnswerChange = (answer: string) => {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    if (currentQuestion.type === "MCQ") {
+      const newAnswers = [...userAnswers];
+
+      // If it is a single correct answer question
+      if (currentQuestion.correctAnswers.length === 1) {
+        newAnswers[currentQuestionIndex] = answer; // Select only one option
+      } else {
+        // If it is a multiple correct answer question
+        if (newAnswers[currentQuestionIndex]) {
+          const selectedAnswers = newAnswers[currentQuestionIndex].split(','); // Split existing answers
+
+          if (selectedAnswers.includes(answer)) {
+            // Deselect if already selected
+            newAnswers[currentQuestionIndex] = selectedAnswers.filter(ans => ans !== answer).join(',');
+          } else {
+            selectedAnswers.push(answer); // Add new selection
+            newAnswers[currentQuestionIndex] = selectedAnswers.join(','); // Join back to string
+          }
+        } else {
+          newAnswers[currentQuestionIndex] = answer; // Initialize with the first selection
+        }
+      }
+
+      setUserAnswers(newAnswers);
+    } else {
+      const newAnswers = [...userAnswers];
+      newAnswers[currentQuestionIndex] = answer;
+      setUserAnswers(newAnswers);
+    }
+  };
+
+  const calculateScore = () => {
+    let totalScore = 0;
+
+    questions.forEach((question, index) => {
+      const userAnswer = userAnswers[index];
+      const correctAnswers = question.correctAnswers;
+
+      if (question.type === "MCQ") {
+        const userAnswerArray = userAnswer ? userAnswer.split(',') : [];
+        if (userAnswerArray.length === correctAnswers.length && userAnswerArray.every(answer => correctAnswers.includes(answer))) {
+          totalScore++;
+        }
+      } else if (question.type === "Fill Up" && userAnswer?.toLowerCase() === correctAnswers[0]?.toLowerCase()) {
+        totalScore++;
+      } else if (question.type === "True/False" && userAnswer === correctAnswers[0]) {
+        totalScore++;
+      }
+    });
+
+    setScore(totalScore);
+    setIsTestStarted(false);
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const isSingleCorrect = currentQuestion.correctAnswers.filter(ans => ans !== "").length === 1;
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
-      <div className="p-6 rounded shadow-md w-80 ">
-        {/* Display the current question number and content */}
-        <h2 className="text-lg font-bold mb-4">Question {currentQuestionIndex + 1}: {questions[currentQuestionIndex].content}</h2>
-        
-        {/* Render options for MCQ or True/False questions */}
-        {questions[currentQuestionIndex].options.length > 0 ? (
-          questions[currentQuestionIndex].options.map((option, index) => (
-            <button
-              key={index}
-              className="block w-full bg-blue-500 py-2 mb-2 rounded hover:bg-blue-600 transition-colors"
-              onClick={() => handleAnswer(index.toString())} // Call handleAnswer with the selected option index
-            >
-              {option} {/* Display option text */}
-            </button>
-          ))
-        ) : (
-          // Render input for Fill Up questions
-          <input
-            type="text"
-            className="border rounded p-2 w-full mb-2"
-            placeholder="Type your answer" // Placeholder for user input
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleAnswer((e.target as HTMLInputElement).value); // Call handleAnswer with the typed answer
-                (e.target as HTMLInputElement).value = ''; // Clear the input after submission
-              }
-            }}
-          />
-        )}
-        
-        <div className="text-center mt-4">
-          <div className="text-xl">{timeLeft}</div> {/* Display time left for answering the question */}
-          <div className="text-sm">Time Left</div> {/* Label for time left */}
-        </div>
-      </div>
+    // <div className=" w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex items-center justify-center">
+    //   {/* Radial gradient for the container to give a faded look */}
+    //   <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+    <div className=" p-4 max-w-md mx-auto flex flex-col justify-center h-screen">
+      {isTestStarted ? (
+        <>
+          <h2 className="text-xl font-bold mb-4">{currentQuestion.content}</h2>
+          {currentQuestion.type === "MCQ" && (
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">{isSingleCorrect ? 'Single Correct' : 'Multiple Correct'}</h3>
+              {currentQuestion.options.map((option, index) => {
+                const isSelected = userAnswers[currentQuestionIndex]?.split(',').includes(index.toString());
+                return (
+                  <Button
+                    key={index}
+                    onClick={() => handleAnswerChange(index.toString())}
+                    variant={"myButton"}
+                    className={` min-w-80 w-full mb-2 transition-colors`}
+                  >
+                    {isSelected && <span className="mr-2">✓</span>}
+                    {option}
+                  </Button>
+                );
+              })}
+            </div>
+          )}
+          {currentQuestion.type === "Fill Up" && (
+            <input
+              type="text"
+              onChange={(e) => handleAnswerChange(e.target.value)}
+              className="border border-gray-300 p-2 rounded  min-w-80 w-full mb-4"
+              placeholder="Type your answer"
+            />
+          )}
+          {currentQuestion.type === "True/False" && (
+            <div className="mb-4">
+              <Button
+                onClick={() => handleAnswerChange("true")}
+                variant={"myButton"}
+                className={` min-w-80 w-full mb-2 transition-colors`}
+              >
+                {userAnswers[currentQuestionIndex] === "true" && <span className="mr-2">✓</span>}
+                True
+              </Button>
+              <Button
+                onClick={() => handleAnswerChange("false")}
+                variant={"myButton"}
+                className={` min-w-80 w-full mb-2 transition-colors`}
+              >
+                {userAnswers[currentQuestionIndex] === "false" && <span className="mr-2">✓</span>}
+                False
+              </Button>
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <p className="text-lg">Time left: {timeLeft !== null ? timeLeft : 0} seconds</p>
+            <Button onClick={handleNextQuestion} variant={"myButton"}>Next</Button>
+          </div>
+        </>
+      ) : (
+        <>
+          {score !== null && (
+            <h3 className="mt-4">Your Score: {score} / {questions.length}</h3>
+          )}
+          {!isTestStarted && score === null && (
+            <Button onClick={startTest} variant={"myButton"} className='self-center'>Start Test</Button>
+          )}
+        </>
+      )}
     </div>
+    // </div>
   );
 };
 
-export default Test; // Export the Test component for use in other parts of the application
+export default Test;
+
