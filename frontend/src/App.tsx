@@ -4,12 +4,13 @@ import Signup from './pages/SignUp/Signup'
 import Login from './pages/Login/Login'
 import Dashboard from './pages/Dashboard/Dashboard'
 import ProfilePage from './pages/Profile/ProfilePage'
-import AboutProfile from './pages/Profile/ProfileAbout'
 import HomePage from './pages/Homepage/Homepage'
 import TestCreator from './pages/TestCreator/TestCreator'
 import TestCreator2 from './pages/TestCreator2/TestCreator2'
 import TestStructure from './pages/TestStructure/TestStructure'
 import Test from './pages/Test/Test'
+import JobDes from './pages/TestCreator/JobDesc'
+
 
 function App() {
 
@@ -24,9 +25,10 @@ function App() {
         <Route path="/testcreator" element={<TestCreator />} />
         <Route path="/t2" element={<TestCreator2 />} />
         <Route path="/profile" element={<ProfilePage/>} />
-        <Route path="/About" element={<AboutProfile/>} />
         <Route path="/teststructure" element={<TestStructure/>} />
         <Route path="/test" element={<Test/>} />
+        <Route path="/JobDescription" element={<JobDes/>} />
+
       </Routes>
     </>
   )

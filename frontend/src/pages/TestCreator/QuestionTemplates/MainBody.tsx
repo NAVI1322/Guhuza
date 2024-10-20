@@ -2,9 +2,24 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import CreateTest from "@/hooks/CreateTest";
 
-const TestStructure = () => {
+
+
+interface MainBodyProps {
+    formdata?: {
+        jobName: string;
+        skills: string;
+        description: string;
+        location: string;
+        benefits: string;
+        ourValues: string;
+        whyWorkWithUs: string;
+        positionSummary: string;
+        positionResponsibilities: string;
+    };
+}
+
+const TestStructure = (formdata:MainBodyProps) => {
     interface Question {
         id: string;
         type: string;
@@ -13,6 +28,9 @@ const TestStructure = () => {
         options?: string[];
         correctAnswers?: (string | number)[];
     }
+
+
+ 
 
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -185,7 +203,8 @@ const TestStructure = () => {
     };
 
     const finishTest = async () => {
-    await CreateTest("software developer",questions)
+        console.log(formdata)
+    // await CreateTest(formdata,questions)
 
     };
 

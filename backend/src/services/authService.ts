@@ -94,7 +94,8 @@ export const createUserService = async (
             lastName: lastName || '',
             email: email,
             companyName: companyName || '', // Provide a default value
-            createdAt: new Date(), // Correctly initialize with parentheses
+            createdAt: new Date(),
+            aboutCompany:"" // Correctly initialize with parentheses
           }
         } : undefined // Create recruiter only if the role is RECRUITER
       },
@@ -105,13 +106,21 @@ export const createUserService = async (
           select: {
             firstName: true,
             lastName: true,
-            about: true,
+            createdAt:true
+          },
+        },
+        Recruiter:{
+          select:{
+            firstName:true,
+            lastName:true,
+            companyName:true,
+            createdAt:true
           }
         }
       }
     });
 
-    return { message: 'User created successfully', user };
+    return { message: 'User created successfully'};
   } catch (error) {
     // Handle Prisma error for unique email constraint
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
@@ -126,7 +135,29 @@ export const loginService = async (email: string, password: string) => {
     // Find the user by email
     const userExist = await prisma.user.findUnique({
       where: { email: email }, // Use the variable 'email'
-      select: {  role: true , password:true}, 
+      select: {  
+        role: true ,
+        password:true,
+        Employee: {
+          select: {
+            firstName: true,
+            lastName: true,
+            createdAt:true,
+            email:true,
+            
+          },
+        },
+        Recruiter:{
+          select:{
+            firstName:true,
+            lastName:true,
+            companyName:true,
+            createdAt:true,
+            email:true,
+          }
+        }
+
+       }, 
     });
 
     
@@ -141,10 +172,10 @@ export const loginService = async (email: string, password: string) => {
       return { success: false, message: 'Invalid password'  };
     }
 
- 
+    const dataReterived = userExist.Employee?userExist.Employee:userExist.Recruiter;
 
     // If user exists and password is correct
-    return { success: true, message: 'Login successful',Role: userExist.role  };
+    return { success: true, message: 'Login successful', Role: userExist.role  ,userdata:dataReterived };
   } catch (error) {
     console.error('Login Error:', error);
     return { success: false, message: 'An error occurred during login' };

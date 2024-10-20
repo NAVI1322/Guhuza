@@ -16,17 +16,13 @@ const Login = () => {
     try {
       const response = await loginCall(email, password);
 
-      const role = response.role;
-
-
-    if(role!="RECRUITER")
-    router('/profile');
-    else 
-    router('/dashboard')
+    const role = response.role
  
-      Toast("Success","Login Successfully")
-    
+      localStorage.setItem("role",role);
+      localStorage.setItem('email',email);
 
+    router('/profile')
+    Toast("Success","Login Successfully")
     } catch (err) {
       Toast("Failed","Email/Password is incorrect","Try again")
     }
@@ -60,7 +56,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 bg-white border text-sm border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              className="w-full p-2 bg-white border text-sm border-gray-300 dark:bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
           </div>
           <div className="mb-4 mt-2">
@@ -73,7 +69,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 border bg-white text-sm  border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              className="w-full p-2 border bg-white text-sm  border-gray-300 dark:bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
           </div>
           <button

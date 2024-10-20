@@ -1,5 +1,8 @@
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Star, Heart, HandMetal, CircleMinus, Save, Ellipsis } from 'lucide-react';
+import useFormattedDateTime from '@/hooks/formattime';
+
+
+import { Star } from 'lucide-react';
 
 interface ContentCardProps {
   avatarSrc: string;
@@ -10,8 +13,7 @@ interface ContentCardProps {
   articleDescription: string;
   articleImageSrc: string;
   date: string;
-  likes: string;
-  comments: string;
+  time: string
 }
 
 const ContentCard: React.FC<ContentCardProps> = ({
@@ -22,13 +24,15 @@ const ContentCard: React.FC<ContentCardProps> = ({
   articleHeading,
   articleDescription,
   articleImageSrc,
-  date,
-  likes,
-  comments,
+  time
 }) => {
+
+
+const { formattedDate, formattedTime } = useFormattedDateTime(time);
+
   return (
-    <div className="flex flex-col py-3 px-5">
-      <div className="border-b pb-5 max-w-[680px] nhd:ml-0">
+    <div className="flex flex-col py-3 px-5 hover:shadow-md hover:rounded-md hover: duration-300 cursor-pointer hover:bg-gray-200/70 ">
+      <div className="border-b hover:border-none pb-5 max-w-[680px] nhd:ml-0 ">
         <div className="flex text-xs items-center gap-2 mb-4">
           <Avatar className="size-5">
             <AvatarImage src={avatarSrc} />
@@ -57,21 +61,11 @@ const ContentCard: React.FC<ContentCardProps> = ({
           <div className="flex justify-between">
             <div className="flex items-center gap-5 text-xs">
               <Star className="block size-4" />
-              <div className="date">{date}</div>
-              <div className="gap-2 items-center hidden tsn:flex">
-                <Heart className="size-4" />
-                <div className="likes">{likes}</div>
-              </div>
-              <div className="gap-2 items-center hidden tsn:flex">
-                <HandMetal className="size-4" />
-                <div className="comments">{comments}</div>
-              </div>
+              <div className="date">{formattedDate}</div>
             </div>
             <div className="flex items-center gap-5 text-xs">
-              <CircleMinus className="size-5 md:size-6" />
-              <Save className="hidden md:block nhd:hidden nst:block" />
-              <Ellipsis className="size-5 md:size-6" />
-              <div className="w-40 h-full hidden md:block"></div>
+             
+              <div className="w-40 h-full hidden md:block">{formattedTime}</div>
             </div>
           </div>
         </div>

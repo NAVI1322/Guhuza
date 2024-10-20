@@ -1,11 +1,12 @@
 import { createjob } from "../services/createAJob";
 import { Request, Response } from 'express';
+import { getAllJobs } from "../services/getJobsDetails";
 
-export const AddJob = async (req: Request, res: Response): Promise<void> => {
+export const getJobDetails = async (req: Request, res: Response): Promise<void> => {
     const { formdata, questions}:any = req.body;
   
     try {
-      const updateResult = await createjob(formdata,questions); // Renamed to updateResult to avoid conflict
+      const updateResult = await getAllJobs(); // Renamed to updateResult to avoid conflict
   
       res.status(200).json({ message: 'Test Created Successfully', data: updateResult });
       return;

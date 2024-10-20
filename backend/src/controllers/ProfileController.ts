@@ -1,4 +1,4 @@
-import { ProfileUpdate } from "../services/ProfileService";
+import { ProfileUpdate } from "../services/UpdateProfile";
 import { Request, Response } from 'express';
 
 export const E_Profile = async (req: Request, res: Response): Promise<void> => {

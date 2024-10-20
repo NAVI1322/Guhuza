@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { AddJob } from '../controllers/addjobcontroller';
+import { AddJob } from '../controllers/addJobController';
 
 
 

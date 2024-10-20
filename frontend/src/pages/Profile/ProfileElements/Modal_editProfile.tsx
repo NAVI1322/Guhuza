@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -10,20 +9,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UpdateEProfile } from "@/hooks/update_EProfile";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Toast } from "@/components/majorComponents/toast"; // Assuming you have a Toast component
 
+export function AboutModal({ email, firstName, lastName }: { email: string; firstName: string; lastName: string; }) {
+  const [fName, setFirstName] = useState(firstName);
+  const [lName, setLastName] = useState(lastName);
 
-export function AboutModal() {
- 
+  // Effect to update state when props change
+  useEffect(() => {
+    setFirstName(firstName);
+    setLastName(lastName);
+  }, [firstName, lastName]); 
 
-  const [firstName,SetfirstName] = useState("");
-  const [lastName,SetlastName] = useState("");
-  const [email,_]= useState("Navneet.Sharmaxdev@gmail.com")
-  
+  const handleSave = async () => {
+    try {
+      await UpdateEProfile(fName, lName, email); // Use updated values
+      Toast("Success", "Profile updated successfully."); // Show success message
+      window.location.reload()
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      Toast("Error", "Failed to update profile."); // Show error message
+    }
+  };
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>Edit Profile</DialogTitle>
         <DialogDescription>
           Make changes to your profile here. Click save when you're done.
         </DialogDescription>
@@ -36,8 +49,8 @@ export function AboutModal() {
           <Input
             id="firstName"
             className="col-span-3"
-            value={firstName}
-             onChange={(e) => SetfirstName(e.target.value)}
+            value={fName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -47,20 +60,20 @@ export function AboutModal() {
           <Input
             id="lastName"
             className="col-span-3"
-            value={lastName}
-             onChange={(e) => SetlastName(e.target.value)}
+            value={lName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
           </Label>
-          <Input id="email" value="navneet.sharmaxdev@gmail.com" className="col-span-3" readOnly />
+          <Input id="email" value={email} className="col-span-3" readOnly />
         </div>
       </div>
       <DialogFooter>
-        <Button type="button" onClick={()=>{UpdateEProfile(firstName,lastName,email)}}>
-          Save changes
+        <Button type="button" onClick={handleSave}>
+          Save Changes
         </Button>
       </DialogFooter>
     </DialogContent>

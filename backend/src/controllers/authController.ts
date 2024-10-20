@@ -88,6 +88,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const role = response.Role as 'RECRUITER' | 'JOB_SEEKER'; // Assuming Role is provided in the response
 
+    const userdata = response.userdata;
 
     // Generate the token with the user's role
     const token = generateToken(email, role);
@@ -95,6 +96,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({
       message: 'Login successful',
       token,
+      userdata,
       role
     });
   } catch (error) {

@@ -39,11 +39,11 @@ const questions: Question[] = [
 ];
 
 // Functional component representing the quiz
-const Test: React.FC = () => {
+const   Test: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Tracks the index of the current question
   const [timeLeft, setTimeLeft] = useState(questions[0].time); // Time left for the current question
   const [correctCount, setCorrectCount] = useState(0); // Count of correct answers given by the user
-  const [userAnswers, setUserAnswers] = useState<string[]>([]); // Array to store user's answers
+  const [_, setUserAnswers] = useState<string[]>([]); // Array to store user's answers
 
   // Effect hook to manage the timer for each question
   useEffect(() => {

@@ -1,7 +1,10 @@
 import darklogo from "../../../assets/images/logos/darklogo.png";
 import { BellRing, MoveUpRight, NotebookPen, Search } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ContextMenu } from "@/components/ui/context-menu";
+import { ContextMenuTrigger } from "@radix-ui/react-context-menu";
 import { ModeToggle } from "@/components/theme/modeToggle";
+import { ProfileContectMenu } from "./Profilemenu";
+
 
 const Navbar = () => {
   return (
@@ -27,10 +30,18 @@ const Navbar = () => {
           <ModeToggle />
           </div>
         <BellRing className='size-5'/>
-          <Avatar className='size-8'>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+        <ContextMenu>
+        <ContextMenuTrigger>
+        <div>
+           <img
+          src="https://picsum.photos/400/400"
+          alt=""
+          className="rounded-full w-8 h-8"
+         />
+        </div>
+         <ProfileContectMenu />
+         </ContextMenuTrigger>
+         </ ContextMenu >
         </div>
       </div>
     </>

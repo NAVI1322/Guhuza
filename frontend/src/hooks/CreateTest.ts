@@ -9,11 +9,25 @@ interface QuestionData {
     correctAnswers?: (string | number | boolean)[]; // Allow both string and number
 }
 
+interface MainBodyProps {
+    formdata?: {
+        jobName: string;
+        skills: string;
+        description: string;
+        location: string;
+        benefits: string;
+        ourValues: string;
+        whyWorkWithUs: string;
+        positionSummary: string;
+        positionResponsibilities: string;
+    };
+}
+
 // Adjusted the parameter type to be an array of QuestionData
-const CreateTest = async (JobName: string, questions: QuestionData[]) => {
+const CreateTest = async (Jobdata:MainBodyProps, questions: QuestionData[]) => {
     try {
         const response = await axios.post('http://localhost:3000/create/createjob', {
-            JobName,
+            Jobdata,
             questions: questions.map(e => ({
                 type: e.type,
                 content: e.content,

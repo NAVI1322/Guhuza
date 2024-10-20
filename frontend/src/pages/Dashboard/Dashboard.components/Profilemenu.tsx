@@ -1,8 +1,7 @@
 import {
-
     ContextMenuContent,
     ContextMenuItem,
-   
+
   } from "@/components/ui/context-menu"
 import { useNavigate } from "react-router-dom"
 
@@ -11,6 +10,7 @@ export function ProfileContectMenu()
 {
 
     const navigate = useNavigate();
+
     const handleLogout = () => {
       // Clear the local storage
       localStorage.removeItem("token");
@@ -21,7 +21,6 @@ export function ProfileContectMenu()
       // Optionally redirect to the login page or another page
       navigate("/login"); // Change the path as needed
     };
-
     return (
  
         <ContextMenuContent>
