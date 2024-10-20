@@ -10,6 +10,8 @@ import TestCreator from './pages/TestCreator/TestCreator'
 import TestCreator2 from './pages/TestCreator2/TestCreator2'
 import TestStructure from './pages/TestStructure/TestStructure'
 import Test from './pages/Test/Test'
+import Recruiter from './pages/Recruiter/Recruiter'
+import Applications from './pages/Applications/Applications'
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
         <Route path="/About" element={<AboutProfile/>} />
         <Route path="/teststructure" element={<TestStructure/>} />
         <Route path="/test" element={<Test/>} />
+        <Route path="/recruiter" element={<Recruiter/>} />
+        <Route path="/applications" element={<Applications/>} />
       </Routes>
     </>
   )
