@@ -5,6 +5,7 @@ import useFormattedDateTime from '@/hooks/formattime';
 import { Star } from 'lucide-react';
 
 interface ContentCardProps {
+  key:string
   avatarSrc: string;
   avatarFallback: string;
   name: string;
@@ -13,10 +14,12 @@ interface ContentCardProps {
   articleDescription: string;
   articleImageSrc: string;
   date: string;
-  time: string
+  time: string;
+  HandleApplicationClickEvent: (jobId: string) => void; // Updated type to accept jobId
 }
 
 const ContentCard: React.FC<ContentCardProps> = ({
+  key,
   avatarSrc,
   avatarFallback,
   name,
@@ -24,14 +27,15 @@ const ContentCard: React.FC<ContentCardProps> = ({
   articleHeading,
   articleDescription,
   articleImageSrc,
-  time
+  time,
+  HandleApplicationClickEvent 
 }) => {
 
 
 const { formattedDate, formattedTime } = useFormattedDateTime(time);
 
   return (
-    <div className="flex flex-col py-3 px-5 hover:shadow-md hover:rounded-md hover: duration-300 cursor-pointer hover:bg-gray-200/70 ">
+    <div className="flex flex-col py-3 px-5 hover:shadow-md hover:rounded-md hover: duration-300 cursor-pointer hover:bg-gray-200/70 " onClick={ ()=>HandleApplicationClickEvent(key) }>
       <div className="border-b hover:border-none pb-5 max-w-[680px] nhd:ml-0 ">
         <div className="flex text-xs items-center gap-2 mb-4">
           <Avatar className="size-5">

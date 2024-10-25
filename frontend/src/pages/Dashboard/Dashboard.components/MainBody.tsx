@@ -3,6 +3,8 @@ import ContentCard from "./ContentCard";
 import SideBar from "./SideBar";
 import CarouselTopics from "./CarouselTopics";
 import {getJobsDetails} from "@/hooks/getDetails";
+import { useNavigate } from "react-router-dom";
+import { Toast } from "@/components/majorComponents/toast";
 
 interface JobData {
     id: string;
@@ -27,14 +29,18 @@ interface JobData {
     }[];
 }
 
+
+
 const MainBody: React.FC = () => {
     const sidebarRef = useRef<HTMLDivElement>(null);
     const [sidebarHeight, setSidebarHeight] = useState<number>(0);
     const [jobData, setJobData] = useState<JobData[]>([]);
     const [error, setError] = useState<string | null>(null);
 
+    const Router = useNavigate()
+
     useEffect(() => {
-        async function fetchJobs() {
+        async function fetchJobs() {    
             try {
                 const res = await getJobsDetails();
                 setJobData(res.data);
@@ -53,6 +59,17 @@ const MainBody: React.FC = () => {
         }
     }, []);
 
+
+    function HandleApplicationClickEvent(jobId: string) {
+        const selectedJob = jobData.find((job) => job.id === jobId);
+        
+        if (selectedJob) {
+            Router('/description', { state: { selectedJob } });
+        } else {
+           Toast("Error","Job not found for the given ID.")
+        }
+    }
+
     return (
         <div className="flex justify-center ehd:justify-evenly xl:justify-center xl:gap-16">
             <div
@@ -64,7 +81,7 @@ const MainBody: React.FC = () => {
                     <div className="text-red-500">{error}</div>
                 ) : (
                     jobData.map((job) => (
-                        <ContentCard
+                        <ContentCard 
                             key={job.id}
                             avatarSrc="/default-avatar.png" // Placeholder for avatar
                             avatarFallback="N" // Fallback name
@@ -75,7 +92,8 @@ const MainBody: React.FC = () => {
                             articleImageSrc="/default-image.png" // Placeholder for image
                             date={new Date(job.createdAt).toLocaleDateString()} 
                             time={job.createdAt}
-                        />
+                            HandleApplicationClickEvent={() => HandleApplicationClickEvent(job.id)}
+                            />
                     ))
                 )}
             </div>
