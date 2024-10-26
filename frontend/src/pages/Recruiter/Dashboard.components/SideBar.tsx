@@ -5,152 +5,138 @@ import { Save } from "lucide-react";
 const SideBar: React.FC = () => {
   return (
     <div className="w-[360px] hidden nhd:flex shrink-0 border-l px-10 py-7 flex-col h-fit">
-      <StaffPicks />
-      <RecommendedTopics />
-      <WhoToFollow />
+      <TipsSection />
+      <ResourcesSection />
+      <FollowExperts />
       <ReadingList />
-      <Links />
     </div>
   );
 };
 
-const staffPicksData = [
+// Sample tips data
+const tipsData = [
   {
     id: 1,
-    name: "Alice Johnson",
-    topic: "Web Development",
-    description: "Exploring new frontend frameworks.",
+    title: "Understand Your Audience",
+    description: "Tailor your tests to the knowledge level and skills of your audience.",
   },
   {
     id: 2,
-    name: "Bob Smith",
-    topic: "Data Science",
-    description: "Analyzing big data trends.",
+    title: "Use Clear Language",
+    description: "Ensure questions are clearly stated to avoid confusion.",
   },
   {
     id: 3,
-    name: "Charlie Brown",
-    topic: "AI Research",
-    description: "The future of AI technology.",
+    title: "Balance Question Types",
+    description: "Mix multiple-choice, true/false, and open-ended questions for variety.",
+  },
+  {
+    id: 4,
+    title: "Pilot Your Tests",
+    description: "Test your questions with a small group before full deployment.",
+  },
+  {
+    id: 5,
+    title: "Seek Feedback",
+    description: "Ask for feedback on your tests to improve future versions.",
   },
 ];
 
-const StaffPicks: React.FC = () => (
+// Tips Section
+const TipsSection: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Staff Picks</div>
-    {staffPicksData.map((pick) => (
-      <StaffPickItem key={pick.id} pick={pick} />
+    <div className="mb-3 font-bold">Tips for Recruiter</div>
+    {tipsData.map((tip) => (
+      <TipItem key={tip.id} tip={tip} />
     ))}
-    <div className="text-sm mb-5">See full list</div>
+    <div className="text-sm mb-5">See more tips</div>
   </div>
 );
 
-const StaffPickItem: React.FC<{ pick: typeof staffPicksData[0] }> = ({ pick }) => (
+const TipItem: React.FC<{ tip: typeof tipsData[0] }> = ({ tip }) => (
   <div className="mb-4">
-    <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
-      <Avatar className='size-5'>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{pick.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div className="">{pick.name}</div>
-      <div className="font-light">in</div>
-      <div className="">{pick.topic}</div>
-    </div>
-    <div className="text-sm font-semibold">{pick.description}</div>
+    <div className="font-semibold">{tip.title}</div>
+    <div className="text-sm font-light">{tip.description}</div>
   </div>
 );
 
-const recommendedTopics = [
-  "Web Development",
-  "Data Science",
-  "Artificial Intelligence",
-  "Blockchain",
-  "Cybersecurity",
+// Sample resources data
+const resourcesData = [
+  "How to Create Effective Tests",
+  "Understanding Different Question Types",
+  "Analyzing Test Results",
+  "Best Practices for Test Creation",
+  "Using Technology in Testing",
 ];
 
-const RecommendedTopics: React.FC = () => (
+// Resources Section
+const ResourcesSection: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Recommended Topics</div>
+    <div className="mb-3 font-bold">Helpful Resources</div>
     <div className="flex flex-wrap items-center gap-x-4 gap-y-4 mb-5 overflow-hidden">
-      {recommendedTopics.map((topic, index) => (
-        <Button key={index} variant={"myButton"} className="text-xs">{topic}</Button>
+      {resourcesData.map((resource, index) => (
+        <Button key={index} variant={"myButton"} className="text-xs">
+          {resource}
+        </Button>
       ))}
     </div>
-    <div className="text-sm mb-5">See full list</div>
+    <div className="text-sm mb-5">See all resources</div>
   </div>
 );
 
-const whoToFollowData = [
+// Sample expert data
+const expertsData = [
   {
     id: 1,
-    name: "David Williams",
-    bio: "Tech enthusiast and developer.",
+    name: "Dr. Sarah Wilson",
+    bio: "Expert in Educational Psychology.",
   },
   {
     id: 2,
-    name: "Emma Johnson",
-    bio: "Passionate about UI/UX design.",
+    name: "Mark Thompson",
+    bio: "Specialist in Assessment Design.",
   },
   {
     id: 3,
-    name: "Fiona Zhang",
-    bio: "Advocate for open-source software.",
+    name: "Linda Green",
+    bio: "Experienced Test Developer.",
   },
 ];
 
-const WhoToFollow: React.FC = () => (
+// Follow Experts Section
+const FollowExperts: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Who to Follow</div>
-    {whoToFollowData.map((user) => (
-      <FollowItem key={user.id} user={user} />
+    <div className="mb-3 font-bold">Experts to Follow</div>
+    {expertsData.map((expert) => (
+      <FollowItem key={expert.id} expert={expert} />
     ))}
-    <div className="text-sm">See full list</div>
+    <div className="text-sm">See all experts</div>
   </div>
 );
 
-const FollowItem: React.FC<{ user: typeof whoToFollowData[0] }> = ({ user }) => (
+const FollowItem: React.FC<{ expert: typeof expertsData[0] }> = ({ expert }) => (
   <div className="mb-4">
     <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
       <Avatar className='size-5 self-start'>
         <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+        <AvatarFallback>{expert.name.charAt(0)}</AvatarFallback>
       </Avatar>
       <div>
-        <div className="">{user.name}</div>
-        <div className="font-light">{user.bio}</div>
+        <div className="">{expert.name}</div>
+        <div className="font-light">{expert.bio}</div>
       </div>
       <Button variant={"outline"}>Follow</Button>
     </div>
   </div>
 );
 
-const linksData = [
-  "GitHub",
-  "LinkedIn",
-  "Twitter",
-  "Dev.to",
-  "Medium",
-  "Stack Overflow",
-  "CodePen",
-  "Figma",
-  "Dribbble",
-  "Reddit",
-];
-
+// Reading List Section
 const ReadingList: React.FC = () => (
   <div className="mb-5">
     <div className="mb-3 font-bold">Reading List</div>
     <div className="text-xs font-light">
       Click the <Save className="inline size-4" /> icon on any story to add it to your reading list or a custom list that you can share.
     </div>
-  </div>
-);
-
-const Links: React.FC = () => (
-  <div className="flex gap-2 flex-wrap">
-    {linksData.map((link, index) => (
-      <a key={index} href="#" className="text-xs hover:underline">{link}</a>
-    ))}
   </div>
 );
 

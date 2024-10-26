@@ -45,13 +45,13 @@ const Summary: React.FC<SummaryProps> = ({ employeeInfo, jobData, QuestionObj = 
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 bg-gray-50 rounded-lg shadow-lg border border-gray-200">
-      <h3 className="text-2xl font-bold text-center text-blue-800 mb-6">Summary</h3>
+    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+      <h3 className="text-2xl font-bold text-center text-blue-800 dark:text-blue-300 mb-6">Summary</h3>
 
       {/* Employee Info Card */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600 md:flex md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-6">
-        <h4 className="text-xl font-semibold text-blue-600 mb-4 md:mb-0">Employee Information</h4>
-        <div className="text-gray-700 space-y-2 flex-1">
+      <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 border-l-4 border-blue-600 md:flex md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-6">
+        <h4 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4 md:mb-0">Employee Information</h4>
+        <div className="text-gray-700 dark:text-gray-300 space-y-2 flex-1">
           <p><span className="font-medium">Full Name:</span> {employeeInfo?.fullName || "N/A"}</p>
           <p><span className="font-medium">Email:</span> {employeeInfo?.email || "N/A"}</p>
           <p><span className="font-medium">Phone:</span> {employeeInfo?.phoneNumber || "N/A"}</p>
@@ -60,9 +60,9 @@ const Summary: React.FC<SummaryProps> = ({ employeeInfo, jobData, QuestionObj = 
       </div>
 
       {/* Job Details Card */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600 md:flex md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-6">
-        <h4 className="text-xl font-semibold text-green-600 mb-4 md:mb-0">Job Details</h4>
-        <div className="text-gray-700 space-y-2 flex-1">
+      <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 border-l-4 border-green-600 md:flex md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-6">
+        <h4 className="text-xl font-semibold text-green-600 dark:text-green-400 mb-4 md:mb-0">Job Details</h4>
+        <div className="text-gray-700 dark:text-gray-300 space-y-2 flex-1">
           <p><span className="font-medium">Job Name:</span> {jobData?.jobName || "N/A"}</p>
           <p><span className="font-medium">Location:</span> {jobData?.location || "N/A"}</p>
           <p><span className="font-medium">Description:</span> {jobData?.description || "N/A"}</p>
@@ -70,18 +70,18 @@ const Summary: React.FC<SummaryProps> = ({ employeeInfo, jobData, QuestionObj = 
       </div>
 
       {/* Answers Summary Card */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
-        <h4 className="text-xl font-semibold text-yellow-500 mb-4">Your Answers</h4>
-        <div className="space-y-4 text-gray-700">
+      <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+        <h4 className="text-xl font-semibold text-yellow-500 dark:text-yellow-400 mb-4">Your Answers</h4>
+        <div className="space-y-4 text-gray-700 dark:text-gray-300">
           {QuestionObj.length > 0 ? (
             QuestionObj.map((question, index) => (
               <div key={question.id} className="py-2 border-b last:border-b-0">
-                <p className="font-medium text-gray-800">Q{index + 1}: {question.content}</p>
-                <p className="text-gray-700"><strong>Your Answer:</strong> {userAnswers[index] || <span className="italic text-gray-400">Not answered</span>}</p>
+                <p className="font-medium text-gray-800 dark:text-gray-200">Q{index + 1}: {question.content}</p>
+                <p className="text-gray-700 dark:text-gray-300"><strong>Your Answer:</strong> {userAnswers[index] || <span className="italic text-gray-400">Not answered</span>}</p>
               </div>
             ))
           ) : (
-            <p className="text-gray-700 italic">No questions available.</p>
+            <p className="text-gray-700 dark:text-gray-300 italic">No questions available.</p>
           )}
         </div>
       </div>

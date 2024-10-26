@@ -11,6 +11,7 @@ import Test from './pages/Test/Test'
 import Recruiter from './pages/Recruiter/Recruiter'
 import Applications from './pages/Applications/Applications'
 import JobDescriptionPage from './pages/JobApplications/Jobdesc'
+import JobDescriptionPage2 from './pages/JobApplicationsCopy/Jobdesc'
 
 function App() {
 
@@ -26,9 +27,10 @@ function App() {
         <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/teststructure" element={<TestStructure/>} />
         <Route path="/test" element={<Test/>} />
-        <Route path="/recuiter" element={<Recruiter/>} />
-        <Route path="/application" element={<Applications/>} />
+        <Route path="/recruiter" element={<Recruiter/>} />
+        <Route path="/applications" element={<Applications/>} />
         <Route path="/description" element={<JobDescriptionPage/>} />
+        <Route path="/description2" element={<JobDescriptionPage2/>} />
 
       </Routes>
     </>

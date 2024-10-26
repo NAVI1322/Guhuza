@@ -34,7 +34,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               <div className="line-clamp-4 font-bold  md:text-lg">
                 {jobName}
               </div>
-              <div className={`${site.toLowerCase() === 'remote' ? 'text-blue-400' : 'text-orange-400'} font-semibold md:text-lg`}>
+              <div className={`${site.toLowerCase() === 'remote' ? 'text-blue-400' : 'text-orange-400'} font-semibold md:text-lg mr-2`}>
   {site.toLowerCase() === 'remote' ? 'Remote' : 'Office'}
 </div>
                 </div>
@@ -42,7 +42,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               <div className='flex items-center mb-2'>
               </div>
               <div className="font-light text-sm mb-5 flex flex-col gap-[1px]">
-                <div className='flex gap-[4px] items-center text-purple-200'>
+                <div className='flex gap-[4px] items-center text-purple-600 dark:text-purple-200'>
                 <CalendarDays className='size-4'/>
 
                 Start date: {startDate}
@@ -73,8 +73,8 @@ const ContentCard: React.FC<ContentCardProps> = ({
               </div>
             </div>
             <Link to={'/applications'}>
-              <Button variant={'myButton'} className='ml-4'>
-              View Applications
+              <Button variant={'myButton'} className='ml-4 mr-2'>
+              See Applicants
               </Button>
             </Link>
           </div>

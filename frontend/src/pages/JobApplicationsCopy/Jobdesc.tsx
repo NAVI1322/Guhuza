@@ -23,7 +23,7 @@ interface JobDescriptionProps {
     createdAt: string;
 }
 
-const JobDescriptionPage: React.FC = () => {
+const JobDescriptionPage2: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [employeeInfo, setEmployeeInfo] = useState({ fullName: "", email: "", phoneNumber: "", coverLetter: "" });
     
@@ -170,4 +170,4 @@ return (
 );}
 
 
-export default JobDescriptionPage;
+export default JobDescriptionPage2;

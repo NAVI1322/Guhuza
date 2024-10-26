@@ -5,150 +5,150 @@ import { Save } from "lucide-react";
 const SideBar: React.FC = () => {
   return (
     <div className="w-[360px] hidden nhd:flex shrink-0 border-l px-10 py-7 flex-col h-fit">
-      <StaffPicks />
-      <RecommendedTopics />
-      <WhoToFollow />
-      <ReadingList />
-      <Links />
+      <TopCandidates />
+      <RelevantSkills />
+      <NetworkSuggestions />
+      {/* <SavedProfiles /> */}
+      <RecruiterLinks />
     </div>
   );
 };
 
-const staffPicksData = [
+const topCandidatesData = [
   {
     id: 1,
     name: "Alice Johnson",
-    topic: "Web Development",
-    description: "Exploring new frontend frameworks.",
+    role: "Frontend Developer",
+    description: "Experienced in React and TypeScript.",
   },
   {
     id: 2,
     name: "Bob Smith",
-    topic: "Data Science",
-    description: "Analyzing big data trends.",
+    role: "Data Scientist",
+    description: "Skilled in Python and Machine Learning.",
   },
   {
     id: 3,
     name: "Charlie Brown",
-    topic: "AI Research",
-    description: "The future of AI technology.",
+    role: "AI Engineer",
+    description: "Focused on NLP and AI model optimization.",
   },
 ];
 
-const StaffPicks: React.FC = () => (
+const TopCandidates: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Staff Picks</div>
-    {staffPicksData.map((pick) => (
-      <StaffPickItem key={pick.id} pick={pick} />
+    <div className="mb-3 font-bold">Top Candidates</div>
+    {topCandidatesData.map((candidate) => (
+      <CandidateItem key={candidate.id} candidate={candidate} />
     ))}
-    <div className="text-sm mb-5">See full list</div>
+    <div className="text-sm mb-5">View all candidates</div>
   </div>
 );
 
-const StaffPickItem: React.FC<{ pick: typeof staffPicksData[0] }> = ({ pick }) => (
+const CandidateItem: React.FC<{ candidate: typeof topCandidatesData[0] }> = ({ candidate }) => (
   <div className="mb-4">
     <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
       <Avatar className='size-5'>
         <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{pick.name.charAt(0)}</AvatarFallback>
+        <AvatarFallback>{candidate.name.charAt(0)}</AvatarFallback>
       </Avatar>
-      <div className="">{pick.name}</div>
-      <div className="font-light">in</div>
-      <div className="">{pick.topic}</div>
+      <div className="">{candidate.name}</div>
+      <div className="font-light"> - </div>
+      <div className="">{candidate.role}</div>
     </div>
-    <div className="text-sm font-semibold">{pick.description}</div>
+    <div className="text-sm font-semibold">{candidate.description}</div>
   </div>
 );
 
-const recommendedTopics = [
-  "Web Development",
-  "Data Science",
-  "Artificial Intelligence",
-  "Blockchain",
-  "Cybersecurity",
+const relevantSkills = [
+  "React.js",
+  "Data Analysis",
+  "Machine Learning",
+  "Cloud Computing",
+  "DevOps",
 ];
 
-const RecommendedTopics: React.FC = () => (
+const RelevantSkills: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Recommended Topics</div>
+    <div className="mb-3 font-bold">In-Demand Skills</div>
     <div className="flex flex-wrap items-center gap-x-4 gap-y-4 mb-5 overflow-hidden">
-      {recommendedTopics.map((topic, index) => (
-        <Button key={index} variant={"myButton"} className="text-xs">{topic}</Button>
+      {relevantSkills.map((skill, index) => (
+        <Button key={index} variant={"myButton"} className="text-xs">{skill}</Button>
       ))}
     </div>
-    <div className="text-sm mb-5">See full list</div>
+    <div className="text-sm mb-5">Explore all skills</div>
   </div>
 );
 
-const whoToFollowData = [
+const networkSuggestionsData = [
   {
     id: 1,
     name: "David Williams",
-    bio: "Tech enthusiast and developer.",
+    bio: "Recruiter at Tech Solutions.",
   },
   {
     id: 2,
     name: "Emma Johnson",
-    bio: "Passionate about UI/UX design.",
+    bio: "Talent Acquisition at Creative Minds.",
   },
   {
     id: 3,
     name: "Fiona Zhang",
-    bio: "Advocate for open-source software.",
+    bio: "HR Specialist at OpenSource Inc.",
   },
 ];
 
-const WhoToFollow: React.FC = () => (
+const NetworkSuggestions: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3">Who to Follow</div>
-    {whoToFollowData.map((user) => (
-      <FollowItem key={user.id} user={user} />
+    <div className="mb-3 font-bold">Network Suggestions</div>
+    {networkSuggestionsData.map((contact) => (
+      <NetworkItem key={contact.id} contact={contact} />
     ))}
-    <div className="text-sm">See full list</div>
+    <div className="text-sm">See all suggestions</div>
   </div>
 );
 
-const FollowItem: React.FC<{ user: typeof whoToFollowData[0] }> = ({ user }) => (
+const NetworkItem: React.FC<{ contact: typeof networkSuggestionsData[0] }> = ({ contact }) => (
   <div className="mb-4">
     <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
       <Avatar className='size-5 self-start'>
         <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+        <AvatarFallback>{contact.name.charAt(0)}</AvatarFallback>
       </Avatar>
       <div>
-        <div className="">{user.name}</div>
-        <div className="font-light">{user.bio}</div>
+        <div className="">{contact.name}</div>
+        <div className="font-light">{contact.bio}</div>
       </div>
-      <Button variant={"outline"}>Follow</Button>
+      <Button variant={"outline"}>Connect</Button>
     </div>
   </div>
 );
 
-const linksData = [
-  "GitHub",
+const recruiterLinksData = [
   "LinkedIn",
-  "Twitter",
-  "Dev.to",
-  "Medium",
-  "Stack Overflow",
-  "CodePen",
-  "Figma",
-  "Dribbble",
-  "Reddit",
+  "Glassdoor",
+  "Indeed",
+  "GitHub Jobs",
+  "Stack Overflow Jobs",
+  "AngelList",
+  "HackerRank",
+  "LeetCode",
+  "Coursera",
+  "Udacity",
 ];
 
-const ReadingList: React.FC = () => (
+const SavedProfiles: React.FC = () => (
   <div className="mb-5">
-    <div className="mb-3 font-bold">Reading List</div>
+    <div className="mb-3 font-bold">Saved Profiles</div>
     <div className="text-xs font-light">
-      Click the <Save className="inline size-4" /> icon on any story to add it to your reading list or a custom list that you can share.
+      Click the <Save className="inline size-4" /> icon on any candidate's profile to save them for later review.
     </div>
   </div>
 );
 
-const Links: React.FC = () => (
+const RecruiterLinks: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
-    {linksData.map((link, index) => (
+    {recruiterLinksData.map((link, index) => (
       <a key={index} href="#" className="text-xs hover:underline">{link}</a>
     ))}
   </div>
