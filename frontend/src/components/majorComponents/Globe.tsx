@@ -11,7 +11,7 @@ export function GlobeDemo() {
       <span className="pt-20 pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-6xl sm:text-7xl md:text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
         Guhuza
       </span>
-      <Globe className="top-40" />
+      {/* <Globe className="top-40" /> */}
 
     </div>
     </div>

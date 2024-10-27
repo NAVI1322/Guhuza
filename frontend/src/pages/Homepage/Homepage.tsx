@@ -41,7 +41,7 @@ const HomePage = () => (
       <Workflow />
       <Pricing />
       <Testimonials />
-      <GlobeDemo />
+      <GlobeDemo />/
       <Footer />
     </div>
   </div>

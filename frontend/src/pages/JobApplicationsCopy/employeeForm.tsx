@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SelectValue } from "@radix-ui/react-select";
 
@@ -20,8 +30,21 @@ interface FormData {
 }
 
 interface ApplicationFormProps {
-  onSubmit: (data: FormData | null) => void; // Allow null for onSubmit
+  onSubmit: (data: FormData | null) => void;
 }
+
+const tips = {
+  firstName: "Enter your first name as it appears on your ID.",
+  lastName: "Enter your last name as it appears on your ID.",
+  phoneNumber: "Use the format: (123) 456-7890.",
+  email: "Provide a valid email address for communication.",
+  address: "Include your full address with postal code.",
+  coverLetter: "Optional, but can highlight your motivation.",
+  location: "Select your preferred job location.",
+  resume: "Upload a PDF version of your resume.",
+  whyJoin: "Explain why you want to work with us.",
+  availability: "State your earliest availability to start.",
+};
 
 const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<FormData>({
@@ -37,7 +60,11 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSubmit }) => {
     availability: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [activeField, setActiveField] = useState<keyof FormData | null>(null);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -48,31 +75,109 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData); // Pass form data to parent component
+    onSubmit(formData);
+  };
+
+  const handleFocus = (field: keyof FormData | null) => {
+    setActiveField(field);
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative bg-white max-w-3xl w-full mx-4 rounded-lg shadow-lg">
+    <div className="bg-gray-800 bg-opacity-50 justify-center z-50 h-screen flex items-center">
+      <div className="max-w-2xl w-full mx-4 rounded-lg shadow-xl bg-transparent h-4/5">
         <Card>
-          <CardHeader className="px-8 py-6 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-            <CardTitle className="text-2xl font-bold text-gray-900">Job Application Form</CardTitle>
-            <button onClick={() => onSubmit(null)} className="text-gray-500 hover:text-gray-700 text-xl font-bold">
-              &times;
+          <CardHeader className="px-6 py-4 border-b border-gray-200 bg-blue-50 flex justify-between items-center rounded-t-lg">
+            <CardTitle className="text-xl font-semibold text-blue-900">
+              Apply for the Position
+            </CardTitle>
+            <button
+              onClick={() => onSubmit(null)}
+              aria-label="Close form"
+              className="text-gray-500 hover:text-gray-700 text-xl font-bold"
+            >
+              {/* &times; */}
             </button>
           </CardHeader>
 
-          <CardContent className="px-8 py-6 space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleInputChange} required />
-              <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleInputChange} required />
-              <Input name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleInputChange} required />
-              <Input name="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} required />
-              <Textarea name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} required />
-              <Textarea name="coverLetter" placeholder="Cover Letter (Optional)" value={formData.coverLetter} onChange={handleInputChange} />
+          <CardContent className="px-6 py-6 space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Personal Information */}
+              <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus("firstName")}
+                    onBlur={() => handleFocus(null)}
+                    required
+                    className="rounded-md"
+                  />
+                  <Input
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus("lastName")}
+                    onBlur={() => handleFocus(null)}
+                    required
+                    className="rounded-md"
+                  />
+                </div>
+                <Input
+                  name="phoneNumber"
+                  placeholder="Phone Number"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  onFocus={() => handleFocus("phoneNumber")}
+                  onBlur={() => handleFocus(null)}
+                  required
+                  className="rounded-md"
+                />
+                <Input
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  onFocus={() => handleFocus("email")}
+                  onBlur={() => handleFocus(null)}
+                  required
+                  type="email"
+                  className="rounded-md"
+                />
+              </div>
 
-              {/* Select for Job Location */}
-              <Select onValueChange={(value) => setFormData({ ...formData, location: value })}>
+              {/* Address & Cover Letter */}
+              <div className="space-y-3">
+                <Textarea
+                  name="address"
+                  placeholder="Address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  onFocus={() => handleFocus("address")}
+                  onBlur={() => handleFocus(null)}
+                  required
+                  className="rounded-md"
+                />
+                <Textarea
+                  name="coverLetter"
+                  placeholder="Cover Letter (Optional)"
+                  value={formData.coverLetter}
+                  onChange={handleInputChange}
+                  onFocus={() => handleFocus("coverLetter")}
+                  onBlur={() => handleFocus(null)}
+                  className="rounded-md"
+                />
+              </div>
+
+              {/* Job Location */}
+              <Select
+  onValueChange={(value) => {
+    setFormData({ ...formData, location: value });
+    handleFocus("location");
+  }}
+>
                 <SelectTrigger>
                   <SelectValue placeholder="Preferred Job Location" />
                 </SelectTrigger>
@@ -84,16 +189,69 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ onSubmit }) => {
                 </SelectContent>
               </Select>
 
-              <Input type="file" name="resume" accept=".pdf" onChange={handleFileChange} />
-              <Textarea name="whyJoin" placeholder="Why do you want to join us?" value={formData.whyJoin} onChange={handleInputChange} required />
-              <Input name="availability" placeholder="Availability to Start" value={formData.availability} onChange={handleInputChange} required />
+              {/* Resume Upload */}
+              <div className="flex items-center justify-evenly">
+                <div>Upload Resume</div>
+                <Input
+                  type="file"
+                  name="resume"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  onFocus={() => handleFocus("resume")}
+                  onBlur={() => handleFocus(null)}
+                  className="rounded-md w-3/5"
+                />
+              </div>
 
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-12 rounded-md">
+              {/* Additional Information */}
+              <Textarea
+                name="whyJoin"
+                placeholder="Why do you want to join us?"
+                value={formData.whyJoin}
+                onChange={handleInputChange}
+                onFocus={() => handleFocus("whyJoin")}
+                onBlur={() => handleFocus(null)}
+                required
+                className="rounded-md"
+              />
+              <Input
+                name="availability"
+                placeholder="Availability to Start"
+                value={formData.availability}
+                onChange={handleInputChange}
+                onFocus={() => handleFocus("availability")}
+                onBlur={() => handleFocus(null)}
+                required
+                className="rounded-md"
+              />
+
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-md"
+              >
                 Submit Application
               </Button>
-            </form>
+            </form> 
           </CardContent>
         </Card>
+      </div>
+
+      <div className="max-w-2xl w-full mx-4 rounded-lg shadow-xl p-6 h-4/5 
+  bg-gradient-to-r from-blue-500 to-blue-700 dark:from-blue-900 dark:to-blue-600
+  text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <h2 className="text-2xl font-bold mb-4">Application Tips</h2>
+        <ul className="space-y-2">
+          {Object.entries(tips).map(([field, tip]) => (
+            <li
+              key={field}
+              className={`transition-colors duration-300 ${
+                activeField === field ? "text-white" : "text-white/50"
+              }`}
+            >
+              • {tip}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
