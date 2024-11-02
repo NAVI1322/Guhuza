@@ -126,7 +126,7 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate"),
+  plugins: [require("tailwindcss-animate"),require('tailwind-scrollbar'),
 	function ({ addUtilities }) {
 		addUtilities({
 		  '.no-scrollbar': {

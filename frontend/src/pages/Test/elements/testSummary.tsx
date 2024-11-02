@@ -45,9 +45,9 @@ const Summary: React.FC<SummaryProps> = ({ employeeInfo, jobData, QuestionObj = 
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+    <div className="p-4 md:p-8 max-w-4xl mx-auto space-y-8 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 ">
       <h3 className="text-2xl font-bold text-center text-blue-800 dark:text-blue-300 mb-6">Summary</h3>
-
+    
       {/* Employee Info Card */}
       <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 border-l-4 border-blue-600 md:flex md:items-start md:justify-between space-y-4 md:space-y-0 md:space-x-6">
         <h4 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4 md:mb-0">Employee Information</h4>

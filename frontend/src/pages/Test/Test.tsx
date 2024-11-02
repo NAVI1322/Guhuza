@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { useLocation } from 'react-router-dom';
 import Summary from './elements/testSummary';
 
@@ -11,8 +10,6 @@ interface Question {
   options: string[];
   correctAnswers: string[];
 }
-
-
 
 interface LocationState {
   jobId?: string;
@@ -99,43 +96,30 @@ const Test: React.FC = () => {
   const currentQuestion = QuestionObj[currentQuestionIndex];
 
   return (
-    <div className="p-4 max-w-md mx-auto flex flex-col justify-center h-screen">
-      {employeeInfo && (
-        <h2 className="text-xl font-bold mb-4">Welcome, {employeeInfo.fullName}!</h2>
-      )}
+    <div>
+      {employeeInfo && <h2>Welcome, {employeeInfo.fullName}!</h2>}
       {isTestStarted ? (
         <>
-          <h3 className="text-lg font-semibold mb-4">{currentQuestion?.content}</h3>
-          
-          {/* Render options based on question type */}
+          <h3>{currentQuestion?.content}</h3>
+
           {currentQuestion?.type === "multiple-choice" && (
-            <div className="mb-4">
+            <div>
               {currentQuestion.options.map((option, index) => (
-                <Button
-                  key={index}
-                  onClick={() => handleAnswerChange(option)}
-                  variant={"myButton"}
-                  className="min-w-80 w-full mb-2 transition-colors"
-                >
-                  {userAnswers[currentQuestionIndex] === option && <span className="mr-2">✓</span>}
+                <button key={index} onClick={() => handleAnswerChange(option)}>
+                  {userAnswers[currentQuestionIndex] === option && <span>✓</span>}
                   {option}
-                </Button>
+                </button>
               ))}
             </div>
           )}
-          
+
           {currentQuestion?.type === "true-false" && (
-            <div className="mb-4">
+            <div>
               {["True", "False"].map((option) => (
-                <Button
-                  key={option}
-                  onClick={() => handleAnswerChange(option)}
-                  variant={"myButton"}
-                  className="min-w-80 w-full mb-2 transition-colors"
-                >
-                  {userAnswers[currentQuestionIndex] === option && <span className="mr-2">✓</span>}
+                <button key={option} onClick={() => handleAnswerChange(option)}>
+                  {userAnswers[currentQuestionIndex] === option && <span>✓</span>}
                   {option}
-                </Button>
+                </button>
               ))}
             </div>
           )}
@@ -144,26 +128,23 @@ const Test: React.FC = () => {
             <input
               type="text"
               onChange={(e) => handleAnswerChange(e.target.value)}
-              className="border border-gray-300 p-2 rounded min-w-80 w-full mb-4"
               placeholder="Type your answer"
               value={userAnswers[currentQuestionIndex] || ""}
             />
           )}
 
-          <div className="flex items-center justify-between">
-            <p className="text-lg">Time left: {timeLeft !== null ? timeLeft : 0} seconds</p>
-            <Button onClick={handleNextQuestion} variant={"myButton"}>Next</Button>
+          <div>
+            <p>Time left: {timeLeft !== null ? timeLeft : 0} seconds</p>
+            <button onClick={handleNextQuestion}>Next</button>
           </div>
         </>
       ) : (
-        <div className="p-4 max-w-md mx-auto flex flex-col justify-center h-screen">
         <Summary
           employeeInfo={employeeInfo}
           jobData={jobData}
           QuestionObj={QuestionObj}
           userAnswers={userAnswers}
         />
-      </div>
       )}
     </div>
   );
