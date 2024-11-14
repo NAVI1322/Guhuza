@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import ContentCard from "./ContentCard";
 import SideBar from "./SideBar";
 import CarouselTopics from "./CarouselTopics";
+import { Button } from "@/components/ui/button";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const jobs = [
   {
@@ -211,7 +213,7 @@ const MainBody: React.FC = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [sidebarHeight, setSidebarHeight] = useState<number>(0);
   const [activeTopic, setActiveTopic] = useState<string>("Active"); // State for the selected topic
-
+const navigate=useNavigate()
   useEffect(() => {
     if (sidebarRef.current) {
       setSidebarHeight(sidebarRef.current.clientHeight);
@@ -225,6 +227,8 @@ const MainBody: React.FC = () => {
           className="overflow-y-clip nhd:overflow-y-scroll no-scrollbar"
           style={{ height: `${sidebarHeight}px` }}
         >
+                <Button variant={"myButton"} className="mb-3 nhd:hidden block m-auto mt-5 w-1/2" onClick={()=>navigate('/teststructure')}>Create Test</Button>
+
           <div>
             <CarouselTopics activeTopic={activeTopic} setActiveTopic={setActiveTopic} />
           </div>

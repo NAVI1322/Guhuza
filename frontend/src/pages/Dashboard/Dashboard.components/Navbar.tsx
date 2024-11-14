@@ -9,6 +9,7 @@ import { ProfileContectMenu } from "./Profilemenu";
 const Navbar = () => {
   return (
     <>
+    <div className="fixed w-full bg-[#FFFFFF] dark:bg-[#0A0A0A] z-50">
     <div className='flex items-center justify-center gap-2 p-3 border-b text-sm nhd:hidden'>Open in App <MoveUpRight className='size-5'/></div>
       <div className='flex justify-between items-center px-5 py-3 border-b'>
         <div className='flex items-center gap-2'>
@@ -44,6 +45,8 @@ const Navbar = () => {
          </ ContextMenu >
         </div>
       </div>
+      </div>
+      <div className="h-28 nhd:h-16 w-full mb-5"></div>
     </>
   )
 }

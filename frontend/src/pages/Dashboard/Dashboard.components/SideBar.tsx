@@ -1,157 +1,99 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import DOMPurify from "dompurify";
+import { Briefcase, MapPin } from "lucide-react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const SideBar: React.FC = () => {
+interface JobData {
+  id: string;
+  jobDescription: {
+    jobName: string;
+    location: string;
+    description: string;
+    benefits: string;
+    ourValues: string;
+    positionSummary: string;
+    positionResponsibilities: string;
+    skills: string;
+    whyWorkWithUs: string;
+  };
+  createdAt: string;
+  questions: {
+    id: string;
+    type: string;
+    content: string;
+    options: string[];
+    correctAnswers: string[];
+  }[];
+}
+
+const SideBar: React.FC<{ jobData: JobData }> = ({ jobData }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [employeeInfo, setEmployeeInfo] = useState({ fullName: "", email: "", phoneNumber: "", coverLetter: "" });
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const QuestionObj = jobData.questions;
+  const jobId = jobData.id;
+
+  const handleNextStepClickEvent = () => {
+    if (QuestionObj && jobId) {
+      navigate('/rest', { state: { QuestionObj, jobId, employeeInfo ,jobData } });
+    } else {
+      alert("Invalid job data");
+    }
+  };
+
+  const sanitize = (content: string) => DOMPurify.sanitize(content);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setEmployeeInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+
   return (
-    <div className="w-[360px] hidden nhd:flex shrink-0 border-l px-10 py-7 flex-col h-fit">
-      <StaffPicks />
-      <RecommendedTopics />
-      <WhoToFollow />
-      <ReadingList />
-      <Links />
+    <div className="flex justify-center py-6 overflow-auto">
+      <Card className="w-[360px] border-0 ">
+        <CardHeader className="p-4 flex flex-col gap-4 items-start">
+          <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+            <Briefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            {sanitize(jobData.jobDescription.jobName)}
+          </CardTitle>
+          <CardDescription className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1">
+            <MapPin className="w-5 h-5" /> {sanitize(jobData.jobDescription.location)} • Posted on {new Date(jobData.createdAt).toLocaleDateString()}
+          </CardDescription>
+          <Button
+            onClick={() => navigate("/description2", { state: { jobData, jobId } })}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200 shadow-md"
+          >
+            Apply Now
+          </Button>
+        </CardHeader>
+
+        <CardContent className="px-6 pb-4 space-y-6">
+          {[ 
+            { title: "Job Description", content: jobData.jobDescription.description },
+            { title: "Benefits", content: jobData.jobDescription.benefits },
+            { title: "Our Values", content: jobData.jobDescription.ourValues },
+            { title: "Position Summary", content: jobData.jobDescription.positionSummary },
+            { title: "Position Responsibilities", content: jobData.jobDescription.positionResponsibilities },
+            { title: "Skills Required", content: jobData.jobDescription.skills },
+            { title: "Why Work With Us", content: jobData.jobDescription.whyWorkWithUs },
+          ].map((section, index) => (
+            <section key={index} className="border-b pb-4">
+              <h2 className="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">{section.title}</h2>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{sanitize(section.content)}</p>
+            </section>
+          ))}
+        </CardContent>
+      </Card>
+
     </div>
   );
 };
-
-const staffPicksData = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    topic: "Web Development",
-    description: "Exploring new frontend frameworks.",
-  },
-  {
-    id: 2,
-    name: "Bob Smith",
-    topic: "Data Science",
-    description: "Analyzing big data trends.",
-  },
-  {
-    id: 3,
-    name: "Charlie Brown",
-    topic: "AI Research",
-    description: "The future of AI technology.",
-  },
-];
-
-const StaffPicks: React.FC = () => (
-  <div className="mb-5">
-    <div className="mb-3">Staff Picks</div>
-    {staffPicksData.map((pick) => (
-      <StaffPickItem key={pick.id} pick={pick} />
-    ))}
-    <div className="text-sm mb-5">See full list</div>
-  </div>
-);
-
-const StaffPickItem: React.FC<{ pick: typeof staffPicksData[0] }> = ({ pick }) => (
-  <div className="mb-4">
-    <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
-      <Avatar className='size-5'>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{pick.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div className="">{pick.name}</div>
-      <div className="font-light">in</div>
-      <div className="">{pick.topic}</div>
-    </div>
-    <div className="text-sm font-semibold">{pick.description}</div>
-  </div>
-);
-
-const recommendedTopics = [
-  "Web Development",
-  "Data Science",
-  "Artificial Intelligence",
-  "Blockchain",
-  "Cybersecurity",
-];
-
-const RecommendedTopics: React.FC = () => (
-  <div className="mb-5">
-    <div className="mb-3">Recommended Topics</div>
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-4 mb-5 overflow-hidden">
-      {recommendedTopics.map((topic, index) => (
-        <Button key={index} variant={"myButton"} className="text-xs">{topic}</Button>
-      ))}
-    </div>
-    <div className="text-sm mb-5">See full list</div>
-  </div>
-);
-
-const whoToFollowData = [
-  {
-    id: 1,
-    name: "David Williams",
-    bio: "Tech enthusiast and developer.",
-  },
-  {
-    id: 2,
-    name: "Emma Johnson",
-    bio: "Passionate about UI/UX design.",
-  },
-  {
-    id: 3,
-    name: "Fiona Zhang",
-    bio: "Advocate for open-source software.",
-  },
-];
-
-const WhoToFollow: React.FC = () => (
-  <div className="mb-5">
-    <div className="mb-3">Who to Follow</div>
-    {whoToFollowData.map((user) => (
-      <FollowItem key={user.id} user={user} />
-    ))}
-    <div className="text-sm">See full list</div>
-  </div>
-);
-
-const FollowItem: React.FC<{ user: typeof whoToFollowData[0] }> = ({ user }) => (
-  <div className="mb-4">
-    <div className="flex text-xs items-center gap-2 mb-3 overflow-hidden">
-      <Avatar className='size-5 self-start'>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-      <div>
-        <div className="">{user.name}</div>
-        <div className="font-light">{user.bio}</div>
-      </div>
-      <Button variant={"outline"}>Follow</Button>
-    </div>
-  </div>
-);
-
-const linksData = [
-  "GitHub",
-  "LinkedIn",
-  "Twitter",
-  "Dev.to",
-  "Medium",
-  "Stack Overflow",
-  "CodePen",
-  "Figma",
-  "Dribbble",
-  "Reddit",
-];
-
-const ReadingList: React.FC = () => (
-  <div className="mb-5">
-    <div className="mb-3 font-bold">Reading List</div>
-    <div className="text-xs font-light">
-      Click the <Save className="inline size-4" /> icon on any story to add it to your reading list or a custom list that you can share.
-    </div>
-  </div>
-);
-
-const Links: React.FC = () => (
-  <div className="flex gap-2 flex-wrap">
-    {linksData.map((link, index) => (
-      <a key={index} href="#" className="text-xs hover:underline">{link}</a>
-    ))}
-  </div>
-);
 
 export default SideBar;

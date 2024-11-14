@@ -32,7 +32,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
 
   return (
     <div 
-      className="flex flex-col py-3 px-5 hover:shadow-lg hover:rounded-md duration-300 cursor-pointer transition-colors 
+      className=" flex flex-col py-3 px-5 hover:shadow-lg hover:rounded-md duration-300 cursor-pointer transition-colors 
       hover:bg-light:bg-gray-200/70 dark:hover:bg-gray-800/70"
       onClick={() => HandleApplicationClickEvent(key)}
     >
@@ -49,7 +49,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
         <div>
           <div className="flex gap-10">
             <div>
-              <div className="line-clamp-4 font-bold mb-2 md:text-lg hover:text-blue-600 dark:hover:text-blue-400">
+              <div className="line-clamp-4 font-bold mb-2 md:text-lg text-blue-500 ">
                 {articleHeading}
               </div>
               <div className="line-clamp-2 font-light text-sm mb-5">

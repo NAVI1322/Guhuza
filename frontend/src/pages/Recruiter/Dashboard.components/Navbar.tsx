@@ -2,6 +2,7 @@ import darklogo from "../../../assets/images/logos/darklogo.png";
 import { BellRing, MoveUpRight, NotebookPen, Search } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "@/components/theme/modeToggle";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (

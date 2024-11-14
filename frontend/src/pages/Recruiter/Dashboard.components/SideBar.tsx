@@ -1,10 +1,13 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SideBar: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-[360px] hidden nhd:flex shrink-0 border-l px-10 py-7 flex-col h-fit">
+      <Button variant={"myButton"} className="hidden nhd:block mb-10" onClick={()=>navigate('/teststructure')}>Create Test</Button>
       <TipsSection />
       <ResourcesSection />
       <FollowExperts />

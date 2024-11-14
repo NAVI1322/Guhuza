@@ -13,6 +13,7 @@ import Applications from './pages/Applications/Applications'
 import JobDescriptionPage from './pages/JobApplications/Jobdesc'
 import JobDescriptionPage2 from './pages/JobApplicationsCopy/Jobdesc'
 import Rest from './pages/Test/Rest'
+import ApplyFormPage from './pages/Dashboard/Dashboard.components/ApplyFormPage'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/rest" element={<Rest/>} />
         <Route path="/description" element={<JobDescriptionPage/>} />
         <Route path="/description2" element={<JobDescriptionPage2/>} />
+        <Route path="/apply" element={<ApplyFormPage/>} />
 
       </Routes>
     </>
